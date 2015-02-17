@@ -1,0 +1,29 @@
+{
+  "name": "chromeapps-starter-kit",
+  "devDependencies": {
+    "bower-config": "^0.5.2",
+    "cca-delegate": "0.0.5",
+    "exec-then": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-livereload": "^3.7.0",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-util": "^3.0.3",
+    "gulp-vulcanize": "^3.1.0",
+    "inquirer": "^0.8.0",
+    "minimist": "^1.1.0",
+    "next-promise": "^1.0.1",
+    "q": "^1.1.2",
+    "through2": "^0.6.3",
+    "vinyl": "^0.4.3"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "dependencies": {
+    "gulp-polymports": "^0.1.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "install": "node configure"
+  }
+}
