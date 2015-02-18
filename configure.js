@@ -1,5 +1,6 @@
 var next = require('next-promise');
 var inquirer = require('inquirer');
+var conf = require('nconf')
 var exec = require('exec-then');
     exec.verbose = true;
 
@@ -14,6 +15,16 @@ var manifest = [
   }
 ];
 
+function setConfig(answers) {
+var pkg = conf.file({file: 'package.json'});
+    pkg.set('config', {
+      appID: answers.appID,
+      platforms: answers.appPlatforms
+    });
+    pkg.set('name', answers.appID.split('.').pop());
+    pkg.save();
+}
+
 function askFor(next) {
   inquirer.prompt([{
     type: 'input',
@@ -27,36 +38,41 @@ function askFor(next) {
     choices: [{
       name: 'Android',
       checked: true,
-      value: '--android'
+      value: 'android'
     },
     {
       name: 'iOS',
-      value: '--ios'
+      value: 'ios'
     }]
   }], function(answers) {
     var params = ['', answers.appID];
 
     if (answers.appPlatforms.length > 0) {
-      params = params.concat(answers.appPlatforms);
+      answers.appPlatforms.forEach(function(p) {
+        params.push('--' + p);
+      });
     }
 
     manifest[1].run += params.join(' ');
-    next();
+    next(answers);
   });
 }
 
-askFor(function() {
+askFor(function(answers) {
   console.log('Start to install dependencies and configure development environments');
+
   next(manifest, function(run) {
     console.log(run.guide);
-    return exec(run.run, run.opt);
+    return exec(run.run, function(res) {
+      run.err = res.err;
+    });
   }).then(function() {
-    process.exit(0);
-  }, function(res) {
-    if (!res.params.created) {
+    if (manifest[1].err) {
       console.log('You\'ve got problems. Check out errors and rerun \'npm install\' script');
       console.log(res.err ? res.err.toString() : 'Failed to create in Unknown reason');
     }
+
+    console.log('Configuration has been saved');
+    setConfig(answers);
   });
 });
-
