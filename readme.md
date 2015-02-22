@@ -7,7 +7,7 @@
 ```
 git clone https://github.com/ChromeAppsWebComponents/chromeapps-starter-kit.git && cd chromeapps-starter-kit
 
-npm install
+node ./configure com.company.myApp --android --ios
 ```
 
 # License
