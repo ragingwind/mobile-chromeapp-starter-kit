@@ -24,11 +24,10 @@ var manifest = [
     guide: 'Install Bower packages'
   },
   {
-    run: 'cca create ./app ',
+    run: 'cca create ./platform',
     guide: 'Create a new Chrome Mobile App project',
   }
 ];
-
 
 if (args.input.length === 0 || Object.keys(args.flags).length === 0) {
   args.showHelp();
@@ -40,7 +39,8 @@ manifest[2].run = [
   manifest[2].run,
   args.input[0],
   args.flags.android ? '--android' : null,
-  args.flags.ios ? '--ios' : null
+  args.flags.ios ? '--ios' : null,
+  '--link-to=app/manifest.json'
 ].join(' ');
 
 // Run commands in the manifest
