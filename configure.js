@@ -1,8 +1,6 @@
 var next = require('next-promise');
-var inquirer = require('inquirer');
 var conf = require('nconf');
 var exec = require('exec-then');
-    exec.verbose = true;
 var args = require('meow')({
   help: [
       'Usage',
@@ -24,8 +22,12 @@ var manifest = [
     guide: 'Install Bower packages'
   },
   {
+    run: 'gulp build:app',
+    guide: 'Build a application'
+  },
+  {
     run: 'cca create ./platform',
-    guide: 'Create a new Chrome Mobile App project',
+    guide: 'Create a Chrome Mobile App project',
   }
 ];
 
@@ -34,26 +36,31 @@ if (args.input.length === 0 || Object.keys(args.flags).length === 0) {
   return;
 }
 
+// Update verbose option
+if (args.flags.verbose) {
+  manifest[0].run += ' --verbose';
+  manifest[1].run += ' --verbose';
+  exec.verbose = true;
+}
+
 // Update manifest data
-manifest[2].run = [
-  manifest[2].run,
+manifest[3].run = [
+  manifest[3].run,
   args.input[0],
   args.flags.android ? '--android' : null,
   args.flags.ios ? '--ios' : null,
-  '--link-to=app/manifest.json'
+  '--link-to=build/manifest.json'
 ].join(' ');
 
 // Run commands in the manifest
 next(manifest, function(run) {
-  console.log(run.guide);
+  console.info(run.guide);
   return exec(run.run, function(res, deferred) {
     if (run.err) {
-      deferred.reject(run.err)
+      deferred.reject(run.err);
     }
   });
-}).then(function() {
-  console.log('done');
-}, function (err) {
+}), null, function (err) {
   console.log('You\'ve got problems. Check out errors and rerun \'npm install\' script');
-  console.log(err ? err.toString() : 'Failed to create in Unknown reason');
+  console.log('error', err ? err.toString() : 'Failed to create in Unknown reason');
 });
