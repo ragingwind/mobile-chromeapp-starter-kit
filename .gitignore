@@ -1,3 +1,5 @@
 node_modules
 bower_components
-platform
+build
+.tmp
+.sass-cache

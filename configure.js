@@ -1,6 +1,7 @@
 var next = require('next-promise');
 var conf = require('nconf');
 var exec = require('exec-then');
+var cp = require('cp-file');
 var args = require('meow')({
   help: [
       'Usage',
@@ -21,10 +22,10 @@ var manifest = [
     run: 'bower install',
     guide: 'Install Bower packages'
   },
-  {
-    run: 'gulp build:app',
-    guide: 'Build a application'
-  },
+  // {
+  //   run: 'gulp build:app',
+  //   guide: 'Build a application'
+  // },
   {
     run: 'cca create ./platform',
     guide: 'Create a Chrome Mobile App project',
@@ -44,23 +45,32 @@ if (args.flags.verbose) {
 }
 
 // Update manifest data
-manifest[3].run = [
-  manifest[3].run,
+manifest[2].run = [
+  manifest[2].run,
   args.input[0],
   args.flags.android ? '--android' : null,
   args.flags.ios ? '--ios' : null,
   '--link-to=build/manifest.json'
 ].join(' ');
 
-// Run commands in the manifest
-next(manifest, function(run) {
-  console.info(run.guide);
-  return exec(run.run, function(res, deferred) {
-    if (run.err) {
-      deferred.reject(run.err);
-    }
+// Prepare build file
+cp('app/manifest.json', 'build/manifest.json', function() {
+  // Run commands in the manifest
+  next(manifest, function(run) {
+    console.info(run.guide);
+    return exec(run.run, function(res, deferred) {
+      if (res.err) {
+        deferred.reject(res.err);
+      }
+    });
+  }).then(function() {
+    cp('build/manifest.mobile.json', 'app/manifest.mobile.json', function() {
+      require('rimraf').sync('./build');
+    });
+  }, function (err) {
+    console.log('You\'ve got problems. Check out errors');
+    console.log(err ? err.toString() : 'Failed to create in Unknown reason');
   });
-}), null, function (err) {
-  console.log('You\'ve got problems. Check out errors and rerun \'npm install\' script');
-  console.log('error', err ? err.toString() : 'Failed to create in Unknown reason');
 });
+
+

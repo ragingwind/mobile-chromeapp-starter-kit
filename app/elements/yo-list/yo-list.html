@@ -1,0 +1,13 @@
+<link rel="import" href="../polymer-elements.html">
+
+<polymer-element name="yo-list" attributes="">
+  <template>
+    <link rel="stylesheet" href="yo-list.css">
+    <ul>
+      <template id="greeting" repeat="{{ item in items }}">
+        <li>{{ item }}</li>
+      </template>
+    </ul>
+  </template>
+  <script src="yo-list.js"></script>
+</polymer-element>

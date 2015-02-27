@@ -1,0 +1,25 @@
+{
+  "packageId": "com.your.company.YourAppName",
+  "platform": ["android", "ios"],
+  "runWith": ["chrome", "android"],
+  "bundles": {
+    "polymer-elements.html": {
+      "imports": [
+        "core-scaffold",
+        "core-toolbar",
+        "core-header-panel",
+        "core-menu",
+        "core-item",
+        "core-icon",
+        "core-iconset-svg",
+        "paper-button",
+        "paper-icon-button",
+        "paper-shadow",
+        "paper-fab",
+        "paper-input",
+        "paper-item",
+        "core-iconset-svg"
+      ]
+    }
+  }
+}
