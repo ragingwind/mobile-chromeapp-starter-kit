@@ -22,10 +22,10 @@ var manifest = [
     run: 'bower install',
     guide: 'Install Bower packages'
   },
-  // {
-  //   run: 'gulp build:app',
-  //   guide: 'Build a application'
-  // },
+  {
+    run: 'gulp build',
+    guide: 'Build a application'
+  },
   {
     run: 'cca create ./platform',
     guide: 'Create a Chrome Mobile App project',
@@ -45,8 +45,8 @@ if (args.flags.verbose) {
 }
 
 // Update manifest data
-manifest[2].run = [
-  manifest[2].run,
+manifest[3].run = [
+  manifest[3].run,
   args.input[0],
   args.flags.android ? '--android' : null,
   args.flags.ios ? '--ios' : null,
