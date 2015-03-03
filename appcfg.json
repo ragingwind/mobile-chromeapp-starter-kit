@@ -5,20 +5,14 @@
   "bundles": {
     "polymer-elements.html": {
       "imports": [
-        "core-scaffold",
-        "core-toolbar",
+        "core-drawer-panel",
         "core-header-panel",
+        "core-toolbar",
+        "paper-icon-button",
         "core-menu",
         "core-item",
         "core-icon",
-        "core-iconset-svg",
-        "paper-button",
-        "paper-icon-button",
-        "paper-shadow",
-        "paper-fab",
-        "paper-input",
-        "paper-item",
-        "core-iconset-svg"
+        "core-iconset"
       ]
     }
   }

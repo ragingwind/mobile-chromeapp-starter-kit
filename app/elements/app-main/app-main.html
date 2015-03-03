@@ -5,11 +5,38 @@
 <polymer-element name="app-main">
   <template>
     <link rel="stylesheet" href="app-main.css">
-    <div class="hero-unit">
-      <yo-greeting></yo-greeting>
-      <p>You now have</p>
-      <yo-list></yo-list>
-    </div>
+    <core-drawer-panel>
+      <core-header-panel drawer>
+        <core-toolbar>Menu</core-toolbar>
+        <core-menu selected="0">
+          <core-item label="Yo"></core-item>
+          <core-item label="Polymer"></core-item>
+          <core-item label="App"></core-item>
+        </core-menu>
+      </core-header-panel>
+
+      <core-header-panel main>
+        <core-toolbar>
+          <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
+          <span>{{appName}}</span>
+        </core-toolbar>
+        <div class="hero-unit">
+          <yo-greeting></yo-greeting>
+          <p>You now have@@@</p>
+          <yo-list></yo-list>
+          <core-iconset id="my-icons" src="../../bower_components/core-iconset/my-icons.png" width="96" iconSize="24" icons="location place starta stopb bus car train walk">
+          </core-iconset>
+          <core-icon icon="my-icons:location"></core-icon>
+          <core-icon icon="my-icons:place"></core-icon>
+          <core-icon icon="my-icons:starta"></core-icon>
+          <core-icon icon="my-icons:stopb"></core-icon>
+          <core-icon icon="my-icons:bus"></core-icon>
+          <core-icon icon="my-icons:car"></core-icon>
+          <core-icon icon="my-icons:train"></core-icon>
+          <core-icon icon="my-icons:walk"></core-icon>
+        </div>
+      </core-header-panel>
+    </core-drawer-panel>
   </template>
   <script src="app-main.js"></script>
 </polymer-element>
