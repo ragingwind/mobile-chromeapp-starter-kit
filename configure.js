@@ -1,5 +1,4 @@
 var next = require('next-promise');
-var conf = require('nconf');
 var exec = require('exec-then');
 var cp = require('cp-file');
 var args = require('meow')({
