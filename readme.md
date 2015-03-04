@@ -7,7 +7,8 @@
 ```
 git clone https://github.com/ChromeAppsWebComponents/chromeapps-starter-kit.git && cd chromeapps-starter-kit
 
-node ./configure com.company.myApp --android --ios
+# DO NOT RUN under ./bin directory
+node ./bin/configure com.company.myApp --android --ios
 ```
 
 > Remove `platform` in `.gitignore` if you want to keep your `platform` directory
