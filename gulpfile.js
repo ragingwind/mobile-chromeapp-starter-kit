@@ -10,10 +10,9 @@ var ccad = require('cca-delegate');
 var polymports = require('gulp-polymports');
 
 var config = {
-  target: 'chrome',
+  platform: 'chrome',
   watch: false,
-  optimize: false,
-  app: 'build'
+  optimize: false
 };
 
 var styleTask = function(stylesPath, srcs) {
@@ -36,9 +35,8 @@ gulp.task('configure', function() {
   var opts = require('minimist')(process.argv.slice(2));
   config.watch = !!opts.watch;
   config.optimize = (!!opts.optimize || !!opts.o);
-  config.app = opts.app;
-  if (opts.target) {
-    config.target = opts.target;
+  if (opts.platform || opts.p) {
+    config.platform = (opts.platform || opts.p);
   }
 });
 
@@ -101,7 +99,6 @@ gulp.task('copy:elements', function() {
 });
 
 gulp.task('vulcanize:common', function() {
-  console.log('CALLED', 'vulcanize:common');
   var dest = './app/bower_components/common-elements';
   var bundles = JSON.parse(fs.readFileSync('./vulcanize.json')).bundles;
 
@@ -205,7 +202,7 @@ gulp.task('clean', function(cb) {
 gulp.task('run', ['configure'], function() {
   var run = function() {
     ccad.run({
-      platform: config.target,
+      platform: config.platform,
       cwd: './platform'
     }).then(null, function(err) {
       err & console.log(err.toString());
