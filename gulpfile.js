@@ -2,12 +2,12 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var gutil = require('gulp-util');
 var del = require('del');
+var fs = require('fs');
 var runSequence = require('run-sequence');
 var next = require('next-promise');
 var ccad = require('cca-delegate');
     ccad.options({verbose: true});
 var polymports = require('gulp-polymports');
-// var bowercfg = require('bower-config').read();
 
 var config = {
   target: 'chrome',
@@ -101,8 +101,11 @@ gulp.task('copy:elements', function() {
 });
 
 gulp.task('vulcanize:common', function() {
-  var dest = './build/elements';
-  polymports.src(require('./vulcanize').bundles)
+  console.log('CALLED', 'vulcanize:common');
+  var dest = './app/bower_components/common-elements';
+  var bundles = JSON.parse(fs.readFileSync('./vulcanize.json')).bundles;
+
+  polymports.src(bundles)
     .pipe($.vulcanize({
       dest: dest,
       csp: true,
@@ -144,26 +147,42 @@ gulp.task('html', function () {
 });
 
 gulp.task('vulcanize', function(cb) {
-  var tasks = [
-    ['vulcanize:common', 'styles:elements', 'copy:elements'],
-    cb
-  ];
+  var tasks = [];
 
+  tasks.push(['styles:elements', 'copy:elements']);
   if (config.optimize) {
-    tasks.splice(1, 0, 'vulcanize:elements');
+    tasks.push('vulcanize:elements');
   }
+  tasks.push(cb);
 
   runSequence.apply(runSequence, tasks);
 });
 
-gulp.task('clean', function(cb) {
-  del.bind(null, ['.tmp', 'build']));
-  cache.clearAll(cb);
-});
+var watchTask = function(postTask) {
+  return function() {
+    var targets = [
+      [['app/**/*.html', '!app/elements/**/*.html'], ['copy']],
+      [['app/scripts/**/*.js'], ['jshint', 'copy']],
+      [['app/styles/**/*.{scss,css}'], ['styles']],
+      [['app/images/**/*'], ['images']],
+      [['app/elements/**/*.{scss,css}'], ['styles:elements']],
+      [['app/elements/**/*.{js,html}'], ['vulcanize']],
+      [['vulcanize.json'], ['vulcanize:common']]
+    ];
 
-gulp.task('build', ['configure', 'jshint'], function(cb) {
+    targets.forEach(function(t) {
+      if (postTask) {
+        t[1].push(postTask);
+      }
+      gulp.watch(t[0], t[1]);
+    });
+  }
+};
+
+gulp.task('build', ['configure', 'jshint'], function() {
   var tasks = [
-    ['copy', 'copy:bower', 'styles', 'images'],
+    ['styles', 'images', 'vulcanize:common'],
+    ['copy', 'copy:bower'],
     'vulcanize'
   ];
 
@@ -171,19 +190,16 @@ gulp.task('build', ['configure', 'jshint'], function(cb) {
     tasks.push('html');
   }
 
-  tasks.push(cb);
-
   if (config.watch) {
-    gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], ['copy']);
-    gulp.watch(['app/scripts/**/*.js'], ['jshint', 'copy']);
-    gulp.watch(['app/styles/**/*.{scss,css}'], ['styles']);
-    gulp.watch(['app/images/**/*'], ['images']);
-    gulp.watch(['app/elements/**/*.{scss,css}'], ['styles:elements']);
-    gulp.watch(['app/elements/**/*.{js,html}'], ['vulcanize']);
-    gulp.watch(['vulcanize.json'], ['vulcanize:common']);
+    tasks.push(watchTask());
   }
 
   runSequence.apply(runSequence, tasks);
+});
+
+gulp.task('clean', function(cb) {
+  del.sync(['.tmp', 'build', 'app/bower_components/common-elements']);
+  $.cache.clearAll(cb);
 });
 
 gulp.task('run', ['configure'], function() {
@@ -196,17 +212,11 @@ gulp.task('run', ['configure'], function() {
     });
   }
 
-  if (config.watch) {
-    gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], ['copy', run]);
-    gulp.watch(['app/scripts/**/*.js'], ['jshint', 'copy', run]);
-    gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', run]);
-    gulp.watch(['app/images/**/*'], ['images', run]);
-    gulp.watch(['app/elements/**/*.{scss,css}'], ['styles:elements', run]);
-    gulp.watch(['app/elements/**/*.{js,html}'], ['vulcanize', run]);
-    gulp.watch(['vulcanize.json'], ['vulcanize:common', run]);
-  }
-
   run();
+
+  if (config.watch) {
+    watchTask(run)();
+  }
 });
 
 gulp.task('default', ['clean'], function(cb) {

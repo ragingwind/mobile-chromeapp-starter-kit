@@ -5,7 +5,8 @@ Polymer('yo-list', {
       'Web Component Polyfills',
       'Core Elements',
       'Paper Elements',
-      'Polymer'
+      'Polymer',
+      'Core Iconset'
     ];
   }
 });
