@@ -3,4 +3,6 @@ app/bower_components
 build
 .tmp
 .sass-cache
+*.scss.css
+*.scss.css.map
 platform

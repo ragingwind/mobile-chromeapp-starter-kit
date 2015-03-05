@@ -19,16 +19,18 @@ var styleTask = function(stylesPath, srcs) {
   return gulp.src(srcs.map(function(src) {
       return 'app/' + stylesPath + src;
     }))
-    .pipe($.changed('build/' + stylesPath, {extension: '.scss'}))
+    .pipe($.if('*.scss', $.rename({suffix:'.scss'})))
+    .pipe($.changed('app/' + stylesPath, {extension: '.scss'}))
     .pipe($.rubySass({
         style: 'expanded',
         precision: 10
       })
       .on('error', console.error.bind(console))
     )
+    .pipe($.if('*.scss', $.rename(function(p) {p.extname += '.css'})))
     .pipe(gulp.dest('.tmp/' + stylesPath))
     .pipe($.if('*.css', $.cssmin()))
-    .pipe(gulp.dest('build/' + stylesPath));
+    .pipe(gulp.dest('app/' + stylesPath));
 };
 
 gulp.task('configure', function() {
@@ -194,8 +196,16 @@ gulp.task('build', ['configure', 'jshint'], function() {
   runSequence.apply(runSequence, tasks);
 });
 
+gulp.task('dist', function(cb) {
+});
+
 gulp.task('clean', function(cb) {
-  del.sync(['.tmp', 'build', 'app/bower_components/common-elements']);
+  del.sync([
+    '.tmp', 'build',
+    'app/bower_components/common-elements',
+    'app/elements/**/*.scss.css.*',
+    'app/style/*.scss.css.*'
+  ]);
   $.cache.clearAll(cb);
 });
 
