@@ -45,7 +45,7 @@ gulp.task('configure', function() {
     config.platform = (opts.platform || opts.p);
   }
 
-  if (opts.target && config.target !== opts.target) {
+  if (opts.target) {
     linkto(opts.target, './platform');
     config.target = opts.target;
   }
