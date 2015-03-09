@@ -8,11 +8,13 @@ var next = require('next-promise');
 var ccad = require('cca-delegate');
     ccad.options({verbose: true});
 var polymports = require('gulp-polymports');
+var linkto = require('cordova-linkto');
 
 var config = {
   platform: 'chrome',
   watch: false,
-  optimize: false
+  optimize: false,
+  target: 'app'
 };
 
 var styleTask = function(stylesPath, srcs) {
@@ -35,10 +37,17 @@ var styleTask = function(stylesPath, srcs) {
 
 gulp.task('configure', function() {
   var opts = require('minimist')(process.argv.slice(2));
+
   config.watch = !!opts.watch;
   config.optimize = (!!opts.optimize || !!opts.o);
+
   if (opts.platform || opts.p) {
     config.platform = (opts.platform || opts.p);
+  }
+
+  if (opts.target && config.target !== opts.target) {
+    linkto(opts.target, './platform');
+    config.target = opts.target;
   }
 });
 
@@ -94,7 +103,7 @@ gulp.task('copy:bower', function() {
 gulp.task('copy:elements', function() {
   return gulp.src([
     'app/elements/**/*',
-    '!app/elements/**/*.{css,scss}'
+    '!app/elements/**/*.{scss}'
     ])
     .pipe($.changed('build/elements'))
     .pipe(gulp.dest('build/elements'));
@@ -145,6 +154,18 @@ gulp.task('html', function () {
     .pipe(gulp.dest('build'));
 });
 
+gulp.task('manifest', function() {
+  return gulp.src('app/manifest.json')
+    .pipe($.chromeManifest({
+      buildnumber: true,
+    }))
+    .pipe($.if('*.css', $.cssmin()))
+    .pipe($.if('*.js', $.sourcemaps.init()))
+    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.js', $.sourcemaps.write()))
+    .pipe(gulp.dest('build'));
+});
+
 gulp.task('vulcanize', function(cb) {
   var tasks = [];
 
@@ -182,7 +203,7 @@ gulp.task('build', ['configure', 'jshint'], function() {
   var tasks = [
     ['styles', 'images', 'vulcanize:common'],
     ['copy', 'copy:bower'],
-    'vulcanize'
+    'vulcanize', 'manifest'
   ];
 
   if (config.optimize) {
@@ -196,15 +217,12 @@ gulp.task('build', ['configure', 'jshint'], function() {
   runSequence.apply(runSequence, tasks);
 });
 
-gulp.task('dist', function(cb) {
-});
-
 gulp.task('clean', function(cb) {
   del.sync([
     '.tmp', 'build',
     'app/bower_components/common-elements',
-    'app/elements/**/*.scss.css.*',
-    'app/style/*.scss.css.*'
+    'app/elements/**/*.scss.css**',
+    'app/style/*.scss.css**'
   ]);
   $.cache.clearAll(cb);
 });
