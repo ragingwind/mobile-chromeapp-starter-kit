@@ -1,6 +1,6 @@
 node_modules
 app/bower_components
-build
+dist
 .tmp
 .sass-cache
 *.scss.css
