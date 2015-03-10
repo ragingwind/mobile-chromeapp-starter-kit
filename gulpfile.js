@@ -4,12 +4,8 @@ var del = require('del');
 var fs = require('fs');
 var path = require('path');
 var runSequence = require('run-sequence');
-var merge = require('merge-stream');
-var next = require('next-promise');
 var ccad = require('cca-delegate');
     ccad.options({verbose: true});
-var polymports = require('gulp-polymports');
-var linkto = require('cordova-linkto');
 
 var env = {
   platform: 'chrome',
@@ -30,37 +26,6 @@ var env = {
   }
 };
 
-var styleTask = function(stylesPath, srcs) {
-  var dest = path.join(env.target, stylesPath);
-  var optimize = env.target === 'dist';
-
-  return gulp.src(srcs.map(function(src) {
-      return path.join('app/', stylesPath, src);
-    }))
-    .pipe($.if('*.scss', $.rename({suffix:'.scss'})))
-    .pipe($.changed(dest, {extension: '.scss'}))
-    .pipe($.rubySass({
-        style: 'expanded',
-        precision: 10
-      })
-      .on('error', console.error.bind(console))
-    )
-    .pipe($.if('*.scss', $.rename(function(p) {p.extname += '.css'})))
-    .pipe($.if(optimize, gulp.dest('.tmp/' + stylesPath)))
-    .pipe($.if('*.css' && optimize, $.cssmin()))
-    .pipe(gulp.dest(dest));
-};
-
-var runApp = function() {
-  ccad.run({
-    platform: env.platform,
-    cwd: './platform'
-  }).then(null, function(err) {
-    err & console.log(err.toString());
-    cb(err);
-  });
-};
-
 gulp.task('jshint', function() {
   return gulp.src([
     'app/scripts/**/*.js',
@@ -73,11 +38,23 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('styles', function() {
-  return styleTask('styles', ['/**/*.css', '/*.scss'])
-});
+  var cssmin = env.target === 'dist';
 
-gulp.task('styles:elements', function() {
-  return styleTask('elements', ['/**/*.css', '/**/*.scss']);;
+  return gulp.src([
+    'app/styles/*.scss',
+    'app/elements/**/*.scss'
+  ], {base: 'app'})
+  .pipe($.rename({suffix:'.scss'}))
+  .pipe($.rubySass({
+      style: 'expanded',
+      precision: 10
+    })
+    .on('error', console.error.bind(console))
+  )
+  .pipe($.if('*.scss', $.rename(function(p) {p.extname += '.css'})))
+  .pipe($.if(cssmin, gulp.dest('.tmp/')))
+  .pipe($.if(cssmin && '*.css', $.cssmin()))
+  .pipe(gulp.dest(env.target));
 });
 
 gulp.task('images', function () {
@@ -102,28 +79,20 @@ gulp.task('copy', function() {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy:bower', function() {
+gulp.task('bower', function() {
   return gulp.src([
     'app/bower_components/**/*'
   ])
   .pipe($.changed('dist/bower_components'))
-  .pipe(gulp.dest('dist/bower_components'));
+  .pipe(gulp.dest('dist/bower_components'))
+  .pipe($.size({title: 'bower'}));
 });
 
-gulp.task('copy:elements', function() {
-  return gulp.src([
-    'app/elements/**/*',
-    '!app/elements/**/*.scss'
-    ])
-    .pipe($.changed('dist/elements'))
-    .pipe(gulp.dest('dist/elements'));
-});
-
-gulp.task('vulcanize:common', function() {
+gulp.task('common', function() {
   var dest = path.join(env.target, '/bower_components/common-elements');
   var bundles = JSON.parse(fs.readFileSync('./vulcanize.json')).bundles;
 
-  polymports.src(bundles)
+  $.polymports.src(bundles)
     .pipe($.vulcanize({
       dest: dest,
       csp: true,
@@ -133,16 +102,26 @@ gulp.task('vulcanize:common', function() {
     .pipe(gulp.dest(dest));
 });
 
-gulp.task('vulcanize:elements', function() {
-  var dest = './dist/elements/app-main';
-  gulp.src('dist/elements/app-main/app-main.html')
-    .pipe($.vulcanize({
-      dest: dest,
-      csp: true,
-      inline: true,
-      strip: true
-    }))
-    .pipe(gulp.dest(dest));
+gulp.task('vulcanize', function(cb) {
+  var copy = gulp.task('vulcanize:copy', function() {
+    return gulp.src([
+      'app/elements/**/*',
+      '!app/elements/**/*.scss'
+      ])
+      .pipe(gulp.dest('dist/elements'));
+  });
+
+  var vulcan = gulp.task('vulcanize:app', function() {
+    return gulp.src('dist/elements/app-main/app-main.html')
+      .pipe($.vulcanize({
+        dest: 'dist/elements/app-main',
+        csp: true,
+        inline: true,
+        // strip: true
+      }))
+      .pipe(gulp.dest('dist/elements/app-main'));
+  });
+  return runSequence('vulcanize:copy', 'vulcanize:app', cb);
 });
 
 gulp.task('html', function () {
@@ -176,8 +155,6 @@ gulp.task('manifest', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('vulcanize', ['styles:elements', 'copy:elements', 'vulcanize:elements']);
-
 gulp.task('clean', function(cb) {
   del.sync([
     '.tmp', '.sass-cache', 'dist',
@@ -190,42 +167,50 @@ gulp.task('clean', function(cb) {
 
 gulp.task('build', ['jshint'], function() {
   if (env.target === 'app') {
-    runSequence(
-      ['styles', 'vulcanize:common'],
-      'styles:elements'
-    );
+    runSequence(['styles', 'common']);
   } else {
     runSequence(
-      ['styles', 'images', 'vulcanize:common'],
-      ['copy', 'copy:bower'],
+      ['styles', 'images', 'common'],
+      ['copy', 'bower'],
       'manifest', 'html', 'vulcanize');
     }
 });
 
 gulp.task('run', function() {
-  linkto(env.target, './platform', function(err) {
+  var run = function(cb) {
+    ccad.run({
+      platform: env.platform,
+      linkto: env.target,
+      cwd: './platform'
+    }).then(function() {cb()}, function(err) {cb(err)});
+  };
+
+  run(function(err) {
     if (err) {
-      console.log('Failed to change app path to', env.target);
+      err & console.log('Errors', err);
       return;
     }
 
-    runApp();
-
     if (env.watch) {
-      if (env.target === 'app') {
-        gulp.watch(['app/scripts/**/*.js'], ['jshint', runApp]),
-        gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', runApp]),
-        gulp.watch(['app/elements/**/*.{scss,css}'], ['styles:elements', runApp]),
-        gulp.watch(['vulcanize.json'], ['vulcanize:common', runApp])
-      } else {
-        gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], ['copy', 'html', runApp]);
-        gulp.watch(['app/scripts/**/*.js'], ['jshint', 'copy', runApp]),
-        gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', runApp]),
-        gulp.watch(['app/images/**/*'], ['images', runApp]),
-        gulp.watch(['app/elements/**/*.{scss,css}'], ['styles:elements', runApp]),
-        gulp.watch(['app/elements/**/*.{js,html}'], ['vulcanize', runApp]),
-        gulp.watch(['vulcanize.json'], ['vulcanize:common', runApp])
-      }
+      var within = function(left, start, items) {
+        if (typeof start !== 'number') {
+          items = start;
+          start = 0;
+        }
+
+        if (env.target !== 'app') {
+          left.splice(start ? start : 0, 0, items);
+        }
+
+        return left;
+      };
+
+      gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], within([run], ['copy', 'html']));
+      gulp.watch(['app/scripts/**/*.js'], within(['jshint', run], 1, ['copy']));
+      gulp.watch(['app/{elements,styles}/**/*.{scss,css}'], ['styles', run]);
+      gulp.watch(['app/elements/**/*.{js,html}'], ['jshint', 'vulcanize', run]);
+      gulp.watch(['app/images/**/*'], within([run], 'image'));
+      gulp.watch(['vulcanize.json'], within(['common', run], 1, 'bower'));
     }
   });
 });

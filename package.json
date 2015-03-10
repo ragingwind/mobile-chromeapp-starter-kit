@@ -2,7 +2,7 @@
   "private": true,
   "devDependencies": {
     "bower-config": "^0.5.2",
-    "cca-delegate": "^0.0.7",
+    "cca-delegate": "^0.0.9",
     "cordova-linkto": "0.0.2",
     "cp-file": "^2.0.2",
     "del": "^1.1.1",
@@ -37,7 +37,9 @@
   "engines": {
     "node": ">=0.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "cca-delegate": "0.0.9"
+  },
   "scripts": {
     "test": "mocha"
   }
