@@ -32,8 +32,8 @@ Setup is consist of three parts. clone, install and configure. This start kit re
 This kit is using build system based on gulp. And a few task can use more arguments for watching the files or building/running on `dist` version that can be served in production
 
 - `gulp build`: Build your app. To build production ready version using `--dist` argument
-- `gulp run`: Run your app on emulators/chrome/device with options below.
-  - --platform: `chrome`/`android`/`ios`. You can choose a platform what you want to run the app on. default platform is `chrome`. ex) ```gulp run --platform=android```
+- `gulp run`: Run your app on emulators/chrome/device with options below. ex) ```gulp run --dist --watch --platform=android```
+  - --platform: `chrome`/`android`/`ios`. You can choose a platform what you want to run the app on. default platform is `chrome`.
   - --dist: To run on the app built for production. gulp task try to change `www link` direction of cordova proejct to `dist`. default direction is to `app`
   - --watch: To rerun app when detect changes of files. Mostly recommended to use for running the on `chrome`. or not? It could be taken some time every rerun.
 - `gulp package`: Make a zip package. Using `--dist` argument to make a package from version of production ready.
@@ -41,6 +41,13 @@ This kit is using build system based on gulp. And a few task can use more argume
 - `gulp push`: Delegate `push` command of [Mobile Chrome Apps](http://goo.gl/nU5O6U). Please visit for more information. You can deploy the app to device directly without build and install steps.
 
 - `gulp clean`: Cleanup your project files. remove .tmp. caches and generated files like css gets from scss in Your `app` / `dist`
+
+# [Content Security Policy (CSP)](http://goo.gl/8MiQmf)
+
+[Currently Mobile Chrome Apps(cca) doesn't enforce CSP for apps](http://stackoverflow.com/questions/21940272/does-cordova-webview-violate-csp) but we have to consider CSP to develop the app running on both side between chrome and mobile devices. Check out these rules:
+
+- Creating custom elements: You have to create javascript and html separated files in elements for using Polymer element without any post process.
+- Using vulcanized Polymer `common` elements: This kit using pre-vulcanized Polymer elements in app. `gulp common` task will generates vulcanized polymer component to bower_component with name as `common-elements/polymer-elements.html` that includes Polymer elements is listed in `vulcanize.json`. That mean is you should add Polymer element names on `vulcanize.json` when you feel that other polymer is needed. And then you can imports Polymer common elements to your custom elements at top of the files like common/standard library of outside languages. 
 
 # License
 
