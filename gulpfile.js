@@ -3,13 +3,14 @@ var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
 var ccad = require('cca-delegate');
-var argv = require('minimist')(process.argv.slice(2));
+var args = require('minimist')(process.argv.slice(2));
+var bundles = require('./vulcanize.json').bundles;
 var opts = {
-  platform: /chrome|android|ios/.test(argv.platform) ? argv.platform : 'chrome',
-  watch: !!argv.watch,
-  dist: !!argv.dist,
-  target: argv.dist ? 'dist' : 'app',
-  port: argv.port
+  platform: /chrome|android|ios/.test(args.platform) ? args.platform : 'chrome',
+  watch: !!args.watch,
+  dist: !!args.dist,
+  target: args.dist ? 'dist' : 'app',
+  port: args.port
 };
 
 gulp.task('jshint', function() {
@@ -64,18 +65,25 @@ gulp.task('copy', function() {
 });
 
 gulp.task('bower', function() {
-  return gulp.src([
-    'app/bower_components/**/*'
-  ])
-  .pipe($.changed('dist/bower_components'))
-  .pipe(gulp.dest('dist/bower_components'))
-  .pipe($.size({title: 'bower'}));
+  var targets = [];
+  var path = require('path');
+
+  Object.keys(bundles).forEach(function(bundle) {
+    targets = bundles[bundle].imports.map(function(d) {
+      return path.join('app/bower_components/', path.basename(d), '/**/*');
+    });
+  });
+
+  return gulp.src(targets, {base: 'app/bower_components/'})
+    .pipe($.changed('dist/bower_components'))
+    .pipe(gulp.dest('dist/bower_components'))
+    .pipe($.size({title: 'bower'}));
 });
 
 gulp.task('common', function() {
   var dest = opts.target + '/bower_components/common-elements';
 
-  $.polymports.src(require('./vulcanize.json').bundles)
+  $.polymports.src(bundles)
     .pipe($.vulcanize({
       dest: dest,
       csp: true,
