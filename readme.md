@@ -53,4 +53,4 @@ This kit is using build system based on gulp. And a few task can use more argume
 
 # License
 
-MIT @[ragingwind](http://ragingwind.me)
+MIT @[Jimmy Moon](http://ragingwind.me)
