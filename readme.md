@@ -29,7 +29,7 @@ Setup is consist of three parts. clone, install and configure. This start kit re
 
 # Tasks
 
-This kit is using build system based on gulp. And a few task can use more arguments for watching the files or building/running on `dist` version that can be served in production
+This kit is using build system based on gulp. And a few task can use more arguments for watching the files or building/running on `dist` version that can be served in production. [see video](https://www.youtube.com/watch?v=aGmOzrnHjPM)
 
 - `gulp build`: Build your app. To build production ready version using `--dist` argument
 - `gulp run`: Run your app on emulators/chrome/device with options below. ex) ```gulp run --dist --watch --platform=android```
