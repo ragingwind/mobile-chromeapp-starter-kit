@@ -4,7 +4,7 @@
 
 # Setup
 
-Setup is consist of three parts. clone, install and configure. This start kit requires project creating with [Mobile Chrome Apps](http://goo.gl/nU5O6U). So you have to `configure` project after downloading and installing dependencies.
+Setup is consist of three parts. clone, install and configure. This start kit requires project creating with [Mobile Chrome Apps](http://goo.gl/nU5O6U) that must be installed before. Check it or Refer to [install guide of Mobile Chrome Apps](https://github.com/MobileChromeApps/mobile-chrome-apps/blob/master/docs/Installation.md). 
 
 1. Clone project from github and change directory into created path
     
@@ -26,6 +26,8 @@ Setup is consist of three parts. clone, install and configure. This start kit re
     ```
 
 4. Configure an environment for development. ex) Remove `platform` in `.gitignore`  if you want to keep your `platform` directory. files in `platform/platforms` would be better that stay in `.gitignore` since build the app
+
+5. Build and Run. Try this ```gulp clean && gulp build --dist && gulp run --dist```
 
 # Tasks
 
