@@ -27,6 +27,7 @@
     "gulp-useref": "^1.1.1",
     "gulp-util": "^3.0.3",
     "gulp-vulcanize": "^5.0.0",
+    "gulp-zip": "^2.0.3",
     "jshint-stylish": "^1.0.1",
     "meow": "^3.0.0",
     "minimist": "^1.1.0",

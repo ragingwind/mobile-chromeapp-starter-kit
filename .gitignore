@@ -1,6 +1,7 @@
 node_modules
 app/bower_components
 dist
+package
 .tmp
 .sass-cache
 *.scss.css

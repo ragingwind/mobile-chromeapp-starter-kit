@@ -149,14 +149,11 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('build', ['jshint'], function() {
-  if (!opts.dist) {
-    runSequence(['styles', 'common']);
-  } else {
-    runSequence(
+  var tasks = !opts.dist ? ['styles', 'common'] : [
       ['styles', 'images', 'common'],
       ['copy', 'bower'],
-      'manifest', 'html', 'vulcanize');
-    }
+      'manifest', 'html', 'vulcanize'];
+  runSequence.apply(runSequence, tasks);
 });
 
 gulp.task('run', function() {
@@ -192,6 +189,12 @@ gulp.task('push', function() {
   });
 });
 
+gulp.task('package', ['clean', 'build'], function() {
+  return gulp.src(opts.target + '/**/*')
+    .pipe($.zip('chromeapp.zip'))
+    .pipe(gulp.dest('package'))
+    .pipe($.size({title: 'package'}));
+});
 
 gulp.task('default', ['clean'], function(cb) {
   runSequence('build', 'run', cb);
