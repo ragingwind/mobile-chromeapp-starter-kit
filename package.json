@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "cca-delegate": "^0.0.9",
+    "cca-delegate": "^0.0.11",
     "del": "^1.1.1",
     "exec-then": "^1.3.1",
     "gulp": "^3.8.11",
