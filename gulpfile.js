@@ -8,7 +8,8 @@ var opts = {
   platform: /chrome|android|ios/.test(argv.platform) ? argv.platform : 'chrome',
   watch: !!argv.watch,
   dist: !!argv.dist,
-  target: argv.dist ? 'dist' : 'app'
+  target: argv.dist ? 'dist' : 'app',
+  port: argv.port
 };
 
 gulp.task('jshint', function() {
@@ -159,44 +160,38 @@ gulp.task('build', ['jshint'], function() {
 });
 
 gulp.task('run', function() {
-  var run = function(cb) {
-    ccad.run({
-      platform: opts.platform,
-      linkto: /android|ios/.test(opts.platform) && opts.target ? opts.target : undefined,
-      cwd: './platform',
-      verbose: true
-    }).then(function() {cb()}, function(err) {cb(err)});
-  };
+  ccad.options({
+    platform: opts.platform,
+    linkto: opts.target,
+    cwd: './platform',
+    verbose: true
+  });
 
-  run(function(err) {
-    if (err) {
-      err & console.log('Errors', err);
-      return;
-    }
-
+  ccad.run().then(function() {
     if (opts.watch) {
-      var within = function(left, start, items) {
-        if (typeof start !== 'number') {
-          items = start;
-          start = 0;
-        }
-
-        if (opts.dist) {
-          left.splice(start ? start : 0, 0, items);
-        }
-
-        return left;
-      };
-
-      gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], within([run], ['copy', 'html']));
-      gulp.watch(['app/scripts/**/*.js'], within(['jshint', run], 1, ['copy']));
-      gulp.watch(['app/{elements,styles}/**/*.{scss,css}'], ['styles', run]);
-      gulp.watch(['app/elements/**/*.{js,html}'], ['jshint', 'vulcanize', run]);
-      gulp.watch(['app/images/**/*'], within([run], 'image'));
-      gulp.watch(['vulcanize.json'], within(['common', run], 1, 'bower'));
+      function within(tasks) {return opts.dist ? tasks : null};
+      gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], [within(['copy', 'html']), ccad.run]);
+      gulp.watch(['app/scripts/**/*.js'], ['jshint', within('copy'), ccad.run]);
+      gulp.watch(['app/{elements,styles}/**/*.{scss,css}'], ['styles', ccad.run]);
+      gulp.watch(['app/elements/**/*.{js,html}'], ['jshint', within('vulcanize'), ccad.run]);
+      gulp.watch(['app/images/**/*'], within(['image', ccad.run]));
+      gulp.watch(['vulcanize.json'], ['common', within('bower'), ccad.run]);
     }
+  }).catch(function(err) {
+    console.log('Run returns an error:', err.toString());
   });
 });
+
+gulp.task('push', function() {
+  ccad.push({
+    target: opts.port || '192.168.0.30',
+    linkto: opts.target,
+    watch: opts.watch,
+    cwd: './platform',
+    verbose: true
+  });
+});
+
 
 gulp.task('default', ['clean'], function(cb) {
   runSequence('build', 'run', cb);
