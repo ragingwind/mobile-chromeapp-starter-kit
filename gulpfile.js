@@ -65,7 +65,7 @@ gulp.task('copy', function() {
 });
 
 gulp.task('bower', function() {
-  var targets = [];
+  var targets = ['app/bower_components/common-elements'];
   var path = require('path');
 
   Object.keys(bundles).forEach(function(bundle) {
@@ -94,7 +94,7 @@ gulp.task('common', function() {
 });
 
 gulp.task('vulcanize', function(cb) {
-  var copy = gulp.task('vulcanize:copy', function() {
+  gulp.task('vulcanize:copy', function() {
     return gulp.src([
       'app/elements/**/*',
       '!app/elements/**/*.scss'
@@ -102,7 +102,7 @@ gulp.task('vulcanize', function(cb) {
       .pipe(gulp.dest('dist/elements'));
   });
 
-  var vulcan = gulp.task('vulcanize:app', function() {
+  gulp.task('vulcanize:app', function() {
     return gulp.src('dist/elements/app-main/app-main.html')
       .pipe($.vulcanize({
         dest: 'dist/elements/app-main',
