@@ -4,7 +4,12 @@
 
 # Setup
 
-Setup is consist of three parts. clone, install and configure. This start kit requires project creating with [Mobile Chrome Apps](http://goo.gl/nU5O6U) that must be installed before. Check it or Refer to [install guide of Mobile Chrome Apps](https://github.com/MobileChromeApps/mobile-chrome-apps/blob/master/docs/Installation.md). 
+0. Install [Mobile Chrome Apps](http://goo.gl/nU5O6U) and Android or iOS SDKs. Please refer to [Install guide of Mobile Chrome Apps](https://github.com/MobileChromeApps/mobile-chrome-apps/blob/master/docs/Installation.md). and then Check your development environment using `cca checkenv`. You will get message like below if you have no problem to use `cca`
+    ```
+    cca v0.5.1
+    Android Development: SDK configured properly.
+    iOS Development: SDK configured properly.
+    ```
 
 1. Clone project from github and change directory into created path
     
