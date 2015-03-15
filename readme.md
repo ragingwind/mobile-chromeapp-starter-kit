@@ -34,6 +34,10 @@
 
 5. Build and Run. Try this ```gulp clean && gulp build --dist && gulp run --dist```
 
+## More
+
+Default using styles in gulpfile.js is Sass. If you would use vanilla CSS, using gulpfile.js.cssonly instead of default gulpfile.js
+
 # Tasks
 
 This kit is using build system based on gulp. And a few task can use more arguments for watching the files or building/running on `dist` version that can be served in production. [see video](https://www.youtube.com/watch?v=aGmOzrnHjPM)
