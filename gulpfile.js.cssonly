@@ -137,6 +137,19 @@ gulp.task('manifest', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('cca:run', function(cb) {
+  ccad.options({
+    platform: opts.platform,
+    linkto: opts.target,
+    cwd: './platform',
+    verbose: true
+  });
+
+  ccad.run().then(function() {cb()}).catch(function(err) {
+    console.log('Run returns an error:', err.toString());
+  });;
+});
+
 gulp.task('clean', function(cb) {
   del.sync([
     '.tmp', '.sass-cache', 'dist',
@@ -165,13 +178,13 @@ gulp.task('run', function() {
 
   ccad.run().then(function() {
     if (opts.watch) {
-      function within(tasks) {return opts.dist ? tasks : null};
-      gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], [within(['copy', 'html']), ccad.run]);
-      gulp.watch(['app/scripts/**/*.js'], ['jshint', within('copy'), ccad.run]);
-      gulp.watch(['app/{elements,styles}/**/*.{scss,css}'], ['styles', ccad.run]);
-      gulp.watch(['app/elements/**/*.{js,html}'], ['jshint', within('vulcanize'), ccad.run]);
-      gulp.watch(['app/images/**/*'], within(['image', ccad.run]));
-      gulp.watch(['vulcanize.json'], ['common', within('bower'), ccad.run]);
+      function within(tasks) {return opts.dist ? tasks : []};
+      gulp.watch(['app/**/*.html', '!app/elements/**/*.html'], [within(['copy', 'html']), 'cca:run']);
+      gulp.watch(['app/scripts/**/*.js'], ['jshint', within('copy'), 'cca:run']);
+      gulp.watch(['app/{elements,styles}/**/*.{scss,css}'], ['styles', 'cca:run']);
+      gulp.watch(['app/elements/**/*.{js,html}'], ['jshint', within('vulcanize'), 'cca:run']);
+      gulp.watch(['app/images/**/*'], within(['image', 'cca:run']));
+      gulp.watch(['vulcanize.json'], ['common', within('bower'), 'cca:run']);
     }
   }).catch(function(err) {
     console.log('Run returns an error:', err.toString());
