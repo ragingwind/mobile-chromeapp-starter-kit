@@ -1,4 +1,5 @@
-Polymer('yo-list', {
+Polymer({
+  is: 'yo-list',
   ready: function () {
     this.items = [
       'HTML5 Boilerplate',
