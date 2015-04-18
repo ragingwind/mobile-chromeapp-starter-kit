@@ -1,3 +1,4 @@
-Polymer('yo-greeting', {
+Polymer({
+  is: 'yo-greeting',
   greeting: '\'Hi Hi'
 });

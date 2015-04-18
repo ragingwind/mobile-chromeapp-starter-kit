@@ -85,11 +85,9 @@ gulp.task('common', function() {
 
   $.polymports.src(bundles)
     .pipe($.vulcanize({
-      dest: dest,
-      csp: true,
-      inline: true,
-      strip: true
+      inlineScripts:true
     }))
+    .pipe($.crisper())
     .pipe(gulp.dest(dest));
 });
 
@@ -105,11 +103,9 @@ gulp.task('vulcanize', function(cb) {
   gulp.task('vulcanize:app', function() {
     return gulp.src('dist/elements/app-main/app-main.html')
       .pipe($.vulcanize({
-        dest: 'dist/elements/app-main',
-        csp: true,
-        inline: true,
-        strip: true
+        inlineScripts:true
       }))
+      .pipe($.crisper())
       .pipe(gulp.dest('dist/elements/app-main'));
   });
   return runSequence('vulcanize:copy', 'vulcanize:app', cb);

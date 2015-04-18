@@ -10,7 +10,8 @@
         "core-item",
         "core-icon",
         "core-iconset"
-      ]
+      ],
+      "dest": "app/bower_components/common-elements"
     }
   }
 }
