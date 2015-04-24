@@ -11,11 +11,11 @@
     iOS Development: SDK configured properly.
     ```
 
-1. Clone project from github and change directory into created path
+1. Download a latest version of package at [release page](https://github.com/ragingwind/mobile-chrome-apps-starter-kit/releases) then extract where you want to.
     
     ```
-    git clone https://github.com/ragingwind/mobile-chrome-apps-starter-kit.git 
-    cd mobile-chrome-apps-starter-kit
+    wget https://github.com/ragingwind/mobile-chrome-apps-starter-kit/archive/v0.1.0.tar.gz
+    tar xvf v0.1.0.tar.gz
     ```
 
 2. Install dependencies of NPM and Bower
