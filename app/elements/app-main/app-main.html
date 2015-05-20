@@ -1,25 +1,25 @@
-<link rel="import" href="../../bower_components/common-elements/polymer-elements.html">
+<link rel="import" href="../common/common.html">
 <link rel="import" href="../yo-list/yo-list.html">
 <link rel="import" href="../yo-greeting/yo-greeting.html">
 
 <dom-module id="app-main">
   <template>
     <link rel="stylesheet" href="app-main.scss.css">
-    <core-drawer-panel>
-      <core-header-panel drawer>
-        <core-toolbar>Menu</core-toolbar>
-        <core-menu selected="0">
-          <core-item label="Yo"></core-item>
-          <core-item label="Polymer"></core-item>
-          <core-item label="App"></core-item>
-        </core-menu>
-      </core-header-panel>
+    <paper-drawer-panel>
+      <paper-header-panel drawer>
+        <paper-toolbar>Menu</paper-toolbar>
+        <paper-menu selected="0">
+          <paper-item label="Yo"></paper-item>
+          <paper-item label="Polymer"></paper-item>
+          <paper-item label="App"></paper-item>
+        </paper-menu>
+      </paper-header-panel>
 
-      <core-header-panel main>
-        <core-toolbar>
+      <paper-header-panel main>
+        <paper-toolbar>
           <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
           <span>{{appName}}</span>
-        </core-toolbar>
+        </paper-toolbar>
         <div class="hero-unit">
           <yo-greeting></yo-greeting>
           <p>You are looking</p>
@@ -35,8 +35,8 @@
           <core-icon icon="my-icons:train"></core-icon>
           <core-icon icon="my-icons:walk"></core-icon>
         </div>
-      </core-header-panel>
-    </core-drawer-panel>
+      </paper-header-panel>
+    </paper-drawer-panel>
   </template>
   <script src="app-main.js"></script>
 </dom-module>

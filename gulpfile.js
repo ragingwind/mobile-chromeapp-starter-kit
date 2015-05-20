@@ -83,12 +83,13 @@ gulp.task('bower', function() {
 gulp.task('common', function() {
   var dest = opts.target + '/bower_components/common-elements';
 
-  $.polymports.src(bundles)
+  gulp.src('app/elements/common.html')
     .pipe($.vulcanize({
-      inlineScripts:true
+      inlineScripts:true,
+      inlineCss:true
     }))
     .pipe($.crisper())
-    .pipe(gulp.dest(dest));
+    .pipe(gulp.dest('app/elements/common'));
 });
 
 gulp.task('vulcanize', function(cb) {

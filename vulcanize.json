@@ -2,14 +2,13 @@
   "bundles": {
     "polymer-elements.html": {
       "imports": [
-        "core-drawer-panel",
-        "core-header-panel",
-        "core-toolbar",
-        "paper-icon-button",
-        "core-menu",
-        "core-item",
-        "core-icon",
-        "core-iconset"
+        "iron-icon",
+        "iron-iconset",
+        "paper-drawer-panel",
+        "paper-header-panel",
+        "paper-toolbar",
+        "paper-menu",
+        "paper-item"
       ],
       "dest": "app/bower_components/common-elements"
     }

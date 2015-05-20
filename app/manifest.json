@@ -25,5 +25,6 @@
     },
     "permissions": [
         "<all_urls>"
-    ]
+    ],
+    "content_security_policy": "font-src 'self' http://fonts.googleapis.com"
 }
