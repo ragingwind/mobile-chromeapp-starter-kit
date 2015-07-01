@@ -1,0 +1,30 @@
+{
+    "name": "Chrome Apps Starter Kit",
+    "description": "Chrome Apps Starter Kit",
+    "manifest_version": 2,
+    "minimum_chrome_version": "23",
+    "version": "0.1.1",
+    "offline_enabled": true,
+    "icons": {
+        "16": "images/icons/icon16.png",
+        "36": "images/icons/icon36.png",
+        "48": "images/icons/icon48.png",
+        "57": "images/icons/icon57.png",
+        "72": "images/icons/icon72.png",
+        "96": "images/icons/icon96.png",
+        "114": "images/icons/icon114.png",
+        "128": "images/icons/icon128.png",
+        "144": "images/icons/icon144.png"
+    },
+    "app": {
+        "background": {
+            "scripts": [
+                "scripts/main.js"
+            ]
+        }
+    },
+    "permissions": [
+        "<all_urls>"
+    ],
+    "content_security_policy": "font-src 'self' http://fonts.googleapis.com"
+}

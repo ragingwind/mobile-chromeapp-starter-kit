@@ -1,4 +1,4 @@
-var exec = require('exec-then');
+  var exec = require('exec-then');
 var args = require('minimist')(process.argv.slice(2));
 
 if (args._.length === 0) {

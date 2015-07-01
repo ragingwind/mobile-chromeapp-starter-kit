@@ -1,0 +1,13 @@
+<link rel="import" href="../common/common.html">
+
+<dom-module id="yo-list">
+  <template>
+    <link rel="stylesheet" href="yo-list.scss.css">
+    <ul>
+      <template id="greeting" repeat="{{ item in items }}">
+        <li>{{ item }}</li>
+      </template>
+    </ul>
+  </template>
+  <script src="yo-list.js"></script>
+</dom-module>
