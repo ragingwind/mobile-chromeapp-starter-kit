@@ -1,36 +1,23 @@
 {
   "private": true,
   "devDependencies": {
-    "cca-delegate": "^0.0.15",
-    "del": "^1.2.1",
-    "exec-then": "^1.3.1",
-    "gulp": "^3.9.0",
-    "gulp-cache": "^0.2.10",
-    "gulp-changed": "^1.3.0",
-    "gulp-chrome-manifest": "0.0.11",
-    "gulp-crisper": "0.0.5",
-    "gulp-cssmin": "^0.1.7",
-    "gulp-if": "^1.2.5",
-    "gulp-imagemin": "^2.3.0",
-    "gulp-jshint": "^1.11.2",
-    "gulp-load-plugins": "^1.0.0-rc.1",
-    "gulp-minify-html": "^1.0.4",
-    "gulp-polymports": "^0.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-ruby-sass": "^1.2.0",
-    "gulp-size": "^2.0.0",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^1.2.0",
-    "gulp-uncss": "^1.0.3",
-    "gulp-useref": "^1.3.0",
-    "gulp-vulcanize": "^6.0.1",
-    "gulp-zip": "^3.0.2",
-    "jshint-stylish": "^2.0.1",
-    "minimist": "^1.1.3",
-    "run-sequence": "^1.1.2"
+    "google-font-import": "^0.1.2",
+    "maniver": "^0.2.0",
+    "mkdirp": "^0.5.1",
+    "shelljs": "^0.5.3"
   },
   "engines": {
     "node": ">=0.10.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "clean": "rm -rf package src/polymer-starter-kit/dist",
+    "setup": "node bin/setup $NAME \"$PLATFORM\"",
+    "build": "cd src/polymer-starter-kit; gulp",
+    "packaging": "node bin/package.js build",
+    "chrome": "cd platform; cca run chrome",
+    "android": "cd platform; cca run android --emulator",
+    "ios": "cd platform; cca run ios --emulator",
+    "push": ""
+  }
 }
