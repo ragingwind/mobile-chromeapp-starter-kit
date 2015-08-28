@@ -1,10 +1,5 @@
 node_modules
-app/bower_components
-dist
 package
-.tmp
-.sass-cache
-*.scss.css
-*.scss.css.map
 platform
 platform/platforms
+src/manifest.mobile.json
