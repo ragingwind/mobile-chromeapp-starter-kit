@@ -11,9 +11,9 @@
   },
   "dependencies": {},
   "scripts": {
-    "clean": "rm -rf package src/polymer-starter-kit/dist",
+    "clean": "rm -rf package src/chrome/dist",
     "setup": "node bin/setup $NAME \"$PLATFORM\"",
-    "build": "cd src/polymer-starter-kit; gulp",
+    "build": "cd src; gulp",
     "packaging": "node bin/package.js build",
     "chrome": "cd platform; cca run chrome",
     "android": "cd platform; cca run android --emulator",
