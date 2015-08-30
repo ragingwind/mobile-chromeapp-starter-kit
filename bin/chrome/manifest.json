@@ -19,7 +19,7 @@
   "app": {
     "background": {
       "scripts": [
-        "chrome-apps/main.js"
+        "main.js"
       ]
     }
   },

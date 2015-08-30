@@ -1,3 +1,3 @@
-[submodule "src/polymer-starter-kit"]
-	path = src/polymer-starter-kit
+[submodule "src"]
+	path = src
 	url = https://github.com/PolymerElements/polymer-starter-kit.git
