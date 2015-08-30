@@ -30,7 +30,7 @@ var cmd = [
 mkdirp.sync('./platform');
 
 var exec = shell.exec(cmd, {async: true}, function() {
-  replacePath();
+  // replacePath();
 
   console.log('Setup has been done');
 });
