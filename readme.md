@@ -12,7 +12,7 @@
     ```
 
 1. Download a latest version of package at [release page](https://github.com/ragingwind/mobile-chrome-apps-starter-kit/releases) then extract where you want to.
-    
+
     ```
     wget https://github.com/ragingwind/mobile-chrome-apps-starter-kit/archive/v0.1.0.tar.gz
     tar xvf v0.1.0.tar.gz
@@ -24,10 +24,10 @@
     npm install && bower install
     ```
 
-3. Configure a project that is created with [Mobile Chrome Apps](http://goo.gl/nU5O6U) `configure.js` executes `cca` command with arguments
+3. To setup project for [Mobile Chrome Apps](http://goo.gl/nU5O6U) use npm command below with NAME or PLATFORM configs
 
     ```
-    node ./configure com.your.company.YourAppName --android --ios
+    NAME=com.my.app PLATFORM='--android --ios' npm run config
     ```
 
 4. Configure an environment for development. ex) Remove `platform` in `.gitignore`  if you want to keep your `platform` directory. files in `platform/platforms` would be better that stay in `.gitignore` since build the app
@@ -58,7 +58,7 @@ This kit is using build system based on gulp. And a few task can use more argume
 [Currently Mobile Chrome Apps(cca) doesn't enforce CSP for apps](http://stackoverflow.com/questions/21940272/does-cordova-webview-violate-csp) but we have to consider CSP to develop the app running on both side between chrome and mobile devices. Check out these rules:
 
 - Creating custom elements: You have to create javascript and html separated files in elements for using Polymer element without any post process.
-- Using vulcanized Polymer `common` elements: This kit using pre-vulcanized Polymer elements in app. `gulp common` task will generates vulcanized polymer component to bower_component with name as `common-elements/polymer-elements.html` that includes Polymer elements is listed in `vulcanize.json`. That mean is you should add Polymer element names on `vulcanize.json` when you feel that other polymer is needed. And then you can imports Polymer common elements to your custom elements at top of the files like common/standard library of outside languages. 
+- Using vulcanized Polymer `common` elements: This kit using pre-vulcanized Polymer elements in app. `gulp common` task will generates vulcanized polymer component to bower_component with name as `common-elements/polymer-elements.html` that includes Polymer elements is listed in `vulcanize.json`. That mean is you should add Polymer element names on `vulcanize.json` when you feel that other polymer is needed. And then you can imports Polymer common elements to your custom elements at top of the files like common/standard library of outside languages.
 
 # License
 
