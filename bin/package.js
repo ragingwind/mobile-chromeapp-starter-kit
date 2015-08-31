@@ -27,10 +27,8 @@ function zip(zipfile, manifest) {
     expand: true,
     nonull: true,
     src: [
-      'chrome-apps',
-      'manifest.mobile.json',
-      'polymer-starter-kit/dist/**/*',
-      '!polymer-starter-kit/dist/**/manifest.json'
+      './src/chrome/**/*',
+      '!./src/chrome/dist/**/manifest.json'
     ],
     dest: '/'
   }]).finalize();
