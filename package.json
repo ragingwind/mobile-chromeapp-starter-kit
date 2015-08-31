@@ -1,23 +1,24 @@
 {
   "private": true,
   "devDependencies": {
+    "del": "^1.2.1",
     "google-font-import": "^0.1.2",
     "maniver": "^0.2.0",
     "mkdirp": "^0.5.1",
-    "shelljs": "^0.5.3"
+    "shelljs": "^0.5.3",
+    "xml2js": "^0.4.10"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "dependencies": {},
   "scripts": {
-    "clean": "rm -rf package src/chrome/dist",
     "setup": "node bin/setup $NAME \"$PLATFORM\"",
     "build": "cd src; gulp",
-    "packaging": "node bin/package.js build",
-    "chrome": "cd platform; cca run chrome",
-    "android": "cd platform; cca run android --emulator",
-    "ios": "cd platform; cca run ios --emulator",
-    "push": ""
+    "package": "node bin/package.js build",
+    "chrome": "cd ./platform; cca run $TARGET",
+    "android": "cd ./platform; cca run $TARGET",
+    "ios": "cd ./platform; cca run $TARGET",
+    "push": "cd ./platform; cca push --target=$TARGET"
   }
 }
