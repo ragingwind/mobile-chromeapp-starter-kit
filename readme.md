@@ -42,8 +42,7 @@ This project has two of the build systems for each project, Mobile Chrome Apps a
 Or you can use handy scripts with npm. You can execute build and run commands without changing a path. here is list of run scripts
 
   - `npm run build:app`: run `gulp` command on the `src` path
-  - `npm run build:cca`: run `cca build` command on the `platform` path. You should pass platform type, `android` or `ios`. This is a sample of command: `PLATFORM=android npm run build:cca`
-  - `npm run build`: run both of build command `build:app` and `build:cca` in sequential time. this is a sample of command: `PLATFORM=android npm run build`
+  - `npm run build`: run both of build command `build:app` and `cca build` command running on the `platform` path in sequential time. You should pass platform type if you need to set the target platform, `android` or `ios`. this is a sample of command: `PLATFORM=android npm run build`
   - `npm run chrome`: run `cca run chrome` command on the `platform` path,
   - `npm run android`: run `cca run android` command on the `platform` path,
   - `npm run ios`: run `cca run ios` command on the `platform` path,
