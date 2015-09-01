@@ -1,5 +1,7 @@
 # Mobile Chrome Apps Starter Kit
 
+![Demo for Mobile Chrome Apps Starter Kit](https://cloud.githubusercontent.com/assets/124117/9600512/671e3ba4-50d6-11e5-8e2f-cdf37431b88a.gif)
+
 > Mobile Chrome Apps Starter Kit is Yet Another Opinionated Boilerplate for Chrome Apps development. "Helping you to stay productive following the best practices. A solid starting point for both professionals and newcomers to the industry." - [google/web-starter-kit](http://goo.gl/YNV3lb)
 
 ## Setup
