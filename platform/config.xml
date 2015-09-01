@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="com.my.app" version="0.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<?xml version='1.0' encoding='utf-8'?><widget id="com.my.app" version="0.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Chrome Apps Starter Kit</name>
     <description>Chrome Apps Starter Kit</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">Author Name &lt;a@b.com></author>
@@ -13,32 +12,32 @@
     <allow-intent href="geo:*"/>
     <platform name="android">
         <allow-intent href="market:*"/>
-        <icon src="www/chrome-apps/icons/icon144.png"/>
-        <icon src="www/chrome-apps/icons/icon16.png" width="16"/>
-        <icon src="www/chrome-apps/icons/icon36.png" width="36"/>
-        <icon src="www/chrome-apps/icons/icon48.png" width="48"/>
-        <icon src="www/chrome-apps/icons/icon57.png" width="57"/>
-        <icon src="www/chrome-apps/icons/icon72.png" width="72"/>
-        <icon src="www/chrome-apps/icons/icon96.png" width="96"/>
-        <icon src="www/chrome-apps/icons/icon114.png" width="114"/>
-        <icon src="www/chrome-apps/icons/icon128.png" width="128"/>
-        <icon src="www/chrome-apps/icons/icon144.png" width="144"/>
-    </platform>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <icon src="www/icons/icon144.png"/><icon src="www/icons/icon16.png" width="16"/><icon src="www/icons/icon36.png" width="36"/><icon src="www/icons/icon48.png" width="48"/><icon src="www/icons/icon57.png" width="57"/><icon src="www/icons/icon72.png" width="72"/><icon src="www/icons/icon96.png" width="96"/><icon src="www/icons/icon114.png" width="114"/><icon src="www/icons/icon128.png" width="128"/><icon src="www/icons/icon144.png" width="144"/></platform>
     <platform name="ios">
         <allow-intent href="itms:*"/>
         <allow-intent href="itms-apps:*"/>
-        <icon src="www/chrome-apps/icons/icon144.png"/>
-        <icon src="www/chrome-apps/icons/icon16.png" width="16"/>
-        <icon src="www/chrome-apps/icons/icon36.png" width="36"/>
-        <icon src="www/chrome-apps/icons/icon48.png" width="48"/>
-        <icon src="www/chrome-apps/icons/icon57.png" width="57"/>
-        <icon src="www/chrome-apps/icons/icon72.png" width="72"/>
-        <icon src="www/chrome-apps/icons/icon96.png" width="96"/>
-        <icon src="www/chrome-apps/icons/icon114.png" width="114"/>
-        <icon src="www/chrome-apps/icons/icon128.png" width="128"/>
-        <icon src="www/chrome-apps/icons/icon144.png" width="144"/>
-    </platform>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <icon src="www/icons/icon144.png"/><icon src="www/icons/icon16.png" width="16"/><icon src="www/icons/icon36.png" width="36"/><icon src="www/icons/icon48.png" width="48"/><icon src="www/icons/icon57.png" width="57"/><icon src="www/icons/icon72.png" width="72"/><icon src="www/icons/icon96.png" width="96"/><icon src="www/icons/icon114.png" width="114"/><icon src="www/icons/icon128.png" width="128"/><icon src="www/icons/icon144.png" width="144"/></platform>
     <preference name="android-minSdkVersion" value="14"/>
     <hook src="./hooks/before_prepare/remove-archives.js" type="before_prepare"/>
-    <access origin="*"/>
-</widget>
+    
+<access origin="*"/></widget>
