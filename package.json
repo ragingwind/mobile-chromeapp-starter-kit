@@ -1,24 +1,23 @@
 {
   "private": true,
   "devDependencies": {
-    "del": "^1.2.1",
-    "google-font-import": "^0.1.2",
-    "maniver": "^0.2.0",
-    "mkdirp": "^0.5.1",
-    "shelljs": "^0.5.3",
-    "xml2js": "^0.4.10"
+    "cordova-config-cli": "^0.1.0",
+    "del": "^2.0.0",
+    "google-font-import": "^0.1.2"
   },
   "engines": {
     "node": ">=0.10.0"
   },
-  "dependencies": {},
   "scripts": {
-    "setup": "node bin/setup $NAME \"$PLATFORM\"",
-    "build": "cd src; gulp",
+    "postinstall": "cd src; npm install && bower install; gf-import ./bower_components/font-roboto/roboto.html --html=./bower_components/font-roboto/",
+    "config": "cd platform; cordova-config set name \"$NAME\"; cordova-config set id $ID",
+    "build:app": "cd src; gulp",
+    "build:cca": "cd ../platform; cca build $PLATFORM",
+    "build": "npm run build:app; npm run build:cca",
     "package": "node bin/package.js build",
-    "chrome": "cd ./platform; cca run $TARGET",
-    "android": "cd ./platform; cca run $TARGET",
-    "ios": "cd ./platform; cca run $TARGET",
+    "chrome": "cd ./platform; cca run chrome",
+    "android": "cd ./platform; cca run android",
+    "ios": "cd ./platform; cca run ios",
     "push": "cd ./platform; cca push --target=$TARGET"
   }
 }
