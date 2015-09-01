@@ -1,5 +1,7 @@
 # Mobile Chrome Apps Starter Kit
 
+![Demo for Mobile Chrome Apps Starter Kit](https://cloud.githubusercontent.com/assets/124117/9600512/671e3ba4-50d6-11e5-8e2f-cdf37431b88a.gif)
+
 > Mobile Chrome Apps Starter Kit is Yet Another Opinionated Boilerplate for Chrome Apps development. "Helping you to stay productive following the best practices. A solid starting point for both professionals and newcomers to the industry." - [google/web-starter-kit](http://goo.gl/YNV3lb)
 
 ## Setup
@@ -41,15 +43,15 @@ Or you can use handy scripts with npm. You can execute build and run commands wi
 
   - `npm run build:app`: run `gulp` command on the `src` path
   - `npm run build:cca`: run `cca build` command on the `platform` path. You should pass platform type, `android` or `ios`. This is a sample of command: `PLATFORM=android npm run build:cca`
-  - `npm run build": run both of build command `build:app` and `build:cca` at same time. this is a sample of command: `PLATFORM=android npm run build`
-  "npm run chrome": run `cca run chrome` command on the `platform` path,
-  "npm run android": run `cca run android` command on the `platform` path,
-  "npm run ios": run `cca run ios` command on the `platform` path,
-  "npm run push": run `cca push` command on the `platform` path. You should give target ip address. This is a sample of command: `TARGET=192.168.0.10 npm run push`
+  - `npm run build`: run both of build command `build:app` and `build:cca` in sequential time. this is a sample of command: `PLATFORM=android npm run build`
+  - `npm run chrome`: run `cca run chrome` command on the `platform` path,
+  - `npm run android`: run `cca run android` command on the `platform` path,
+  - `npm run ios`: run `cca run ios` command on the `platform` path,
+  - `npm run push`: run `cca push` command on the `platform` path. You should give target with ip address. This is a sample of command: `TARGET=192.168.0.10 npm run push`
 
 ## Mobile Chrome Apps
 
-We use pre-created project for Mobile Chrome Apps. that means you need to update a few of configurations to fit your application. For example, an application id or name. We are supporting handy script command to configure. `npm run config` command allow you to set a new value to config.xml and If you want to set more configurations, you can user `cordova-config` cli command. Please see [cordova-config-cli](https://www.npmjs.com/package/cordova-config-cli) for more information
+We use pre-created project for Mobile Chrome Apps. that means you need to update a few of configurations to fit your application. For example, an application id or name. We are supporting handy script command to configure. `npm run config` command, which is described above, allow you to set a new value to config.xml and If you want to set more configurations via `cordova-config` cli command. Please see [cordova-config-cli](https://www.npmjs.com/package/cordova-config-cli) for more information
 
 ## Polymer Starter Kit (PSK)
 
