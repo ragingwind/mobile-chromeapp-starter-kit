@@ -2,11 +2,11 @@
 
 > Mobile Chrome Apps Starter Kit is Yet Another Opinionated Boilerplate for Chrome Apps development. "Helping you to stay productive following the best practices. A solid starting point for both professionals and newcomers to the industry." - [google/web-starter-kit](http://goo.gl/YNV3lb)
 
-# Setup
+## Setup
 
-0. Install [Mobile Chrome Apps](http://goo.gl/nU5O6U) and Android or iOS SDKs. Please refer to [Install guide of Mobile Chrome Apps](https://github.com/MobileChromeApps/mobile-chrome-apps/blob/master/docs/Installation.md). and then Check your development environment using `cca checkenv`. You will get message like below if you have no problem to use `cca`
+1. Install [Mobile Chrome Apps](http://goo.gl/nU5O6U) and Android or iOS SDKs. Please refer to [Install guide of Mobile Chrome Apps](https://github.com/MobileChromeApps/mobile-chrome-apps/blob/master/docs/Installation.md). and then Check your development environment using `cca checkenv`. You will get message like below if you have no problem to use `cca`
     ```
-    cca v0.5.1
+    cca v0.x.x
     Android Development: SDK configured properly.
     iOS Development: SDK configured properly.
     ```
@@ -18,48 +18,61 @@
     tar xvf v0.1.0.tar.gz
     ```
 
-2. Install dependencies of NPM and Bower
+1. Run this command to install dependencies for NPM and bower
+    ```
+    npm install
+    ```
+and then `postinstall` script will be started. The `postinstall` script runs `npm install && bower install` command for Polymer Starter Kit, which is on `src` path and then starting font migration for `font-roboto` via `google-font-import` which will be downloading `font-roboto` to use its fonts in local.
+
+3. To configure [Mobile Chrome Apps](http://goo.gl/nU5O6U) to use npm handy command below with NAME, ID and PLATFORM config
 
     ```
-    npm install && bower install
+    NAME="My App" ID=com.my.app PLATFORM='android ios' npm run config
     ```
 
-3. To setup project for [Mobile Chrome Apps](http://goo.gl/nU5O6U) use npm command below with NAME or PLATFORM configs
+## Build and Run
 
-    ```
-    NAME=com.my.app PLATFORM='--android --ios' npm run config
-    ```
+This project has two of the build systems for each project, Mobile Chrome Apps and Polymer Starter Kit. Each build command should be executed on the each project path. Please visit if you want to know more details of build commands.
 
-4. Configure an environment for development. ex) Remove `platform` in `.gitignore`  if you want to keep your `platform` directory. files in `platform/platforms` would be better that stay in `.gitignore` since build the app
+  - Mobile Chrome App: ./platform
+  - Polymer Starter Kit: ./src
+  
+Or you can use handy scripts with npm. You can execute build and run commands without changing a path. here is list of run scripts
 
-5. Build and Run. Try this ```gulp clean && gulp build --dist && gulp run --dist```
+  - `npm run build:app`: run `gulp` command on the `src` path
+  - `npm run build:cca`: run `cca build` command on the `platform` path. You should pass platform type, `android` or `ios`. This is a sample of command: `PLATFORM=android npm run build:cca`
+  - `npm run build": run both of build command `build:app` and `build:cca` at same time. this is a sample of command: `PLATFORM=android npm run build`
+  "npm run chrome": run `cca run chrome` command on the `platform` path,
+  "npm run android": run `cca run android` command on the `platform` path,
+  "npm run ios": run `cca run ios` command on the `platform` path,
+  "npm run push": run `cca push` command on the `platform` path. You should give target ip address. This is a sample of command: `TARGET=192.168.0.10 npm run push`
 
-## More
+## Mobile Chrome Apps
 
-Default using styles in gulpfile.js is Sass. If you would use vanilla CSS, using gulpfile.js.cssonly instead of default gulpfile.js
+We use pre-created project for Mobile Chrome Apps. that means you need to update a few of configurations to fit your application. For example, an application id or name. We are supporting handy script command to configure. `npm run config` command allow you to set a new value to config.xml and If you want to set more configurations, you can user `cordova-config` cli command. Please see [cordova-config-cli](https://www.npmjs.com/package/cordova-config-cli) for more information
 
-# Tasks
+## Polymer Starter Kit (PSK)
 
-This kit is using build system based on gulp. And a few task can use more arguments for watching the files or building/running on `dist` version that can be served in production. [see video](https://www.youtube.com/watch?v=aGmOzrnHjPM)
+The starter kit are using PSK as default application. but we have to had some of changes from PSK for fitting in Chrome Apps. We use latest version at this time it was coming over from [latest commit](https://github.com/PolymerElements/polymer-starter-kit/commit/ece4f2c2aa75ce3ebfe6ccd5d71528168ce63a11) at master brach on the PSK. The version of PSK could be updated any time if we need to. Please see below what has been changed in the current version.
 
-- `gulp build`: Build your app. To build production ready version using `--dist` argument
-- `gulp run`: Run your app on emulators/chrome/device with options below. ex) ```gulp run --dist --watch --platform=android```
-  - --platform: `chrome`/`android`/`ios`. You can choose a platform what you want to run the app on. default platform is `chrome`.
-  - --dist: To run on the app built for production. gulp task try to change `www link` direction of cordova proejct to `dist`. default direction is to `app`
-  - --watch: To rerun app when detect changes of files. Mostly recommended to use for running the on `chrome`. or not? It could be taken some time every rerun.
-- `gulp package`: Make a zip package. Using `--dist` argument to make a package from version of production ready.
-
-- `gulp push`: Delegate `push` command of [Mobile Chrome Apps](http://goo.gl/nU5O6U). Please visit for more information. You can deploy the app to device directly without build and install steps.
-
-- `gulp clean`: Cleanup your project files. remove .tmp. caches and generated files like css gets from scss in Your `app` / `dist`
-
-# [Content Security Policy (CSP)](http://goo.gl/8MiQmf)
-
-[Currently Mobile Chrome Apps(cca) doesn't enforce CSP for apps](http://stackoverflow.com/questions/21940272/does-cordova-webview-violate-csp) but we have to consider CSP to develop the app running on both side between chrome and mobile devices. Check out these rules:
-
-- Creating custom elements: You have to create javascript and html separated files in elements for using Polymer element without any post process.
-- Using vulcanized Polymer `common` elements: This kit using pre-vulcanized Polymer elements in app. `gulp common` task will generates vulcanized polymer component to bower_component with name as `common-elements/polymer-elements.html` that includes Polymer elements is listed in `vulcanize.json`. That mean is you should add Polymer element names on `vulcanize.json` when you feel that other polymer is needed. And then you can imports Polymer common elements to your custom elements at top of the files like common/standard library of outside languages.
-
+- gulpfile.js:
+  - Change `dist` path to `../platform/www/app/`
+  - Add `force` option to `del` to remove target in out of bound
+- app/elements/routing.html:
+  - Add workaround code for a route exception: The element route code will be stopped when Chrome Apps raise an exception as `history.replaceState` is not supported in Packaged Apps. So we added a workaround code that route value set again manually
+  ```javascript
+  try {
+    // add #! before urls
+    page({
+      hashbang: true
+    });
+  } catch (e) {
+    app.route = 'home';
+  }
+  ```
+- app/bower_components/font-roboto:
+  - Download google fonts to local: Chrome Apps doesn't allow to use Google Fonts on remote site so we need to download all fonts in `font-roboto` to use in local. after run `npm install`, `postinstall` script will run `google-font-import` command to make it up.
+  
 # License
 
 MIT @[Jimmy Moon](http://ragingwind.me)
