@@ -12,7 +12,7 @@
     "postinstall": "cd src; npm install && bower install; gf-import ./bower_components/font-roboto/roboto.html --html=./bower_components/font-roboto/",
     "config": "cd platform; cordova-config set name \"$NAME\"; cordova-config set id $ID",
     "build:app": "cd src; gulp",
-    "build:cca": "cd ../platform; cca build $PLATFORM",
+    "build:cca": "cd ./platform; cca build $PLATFORM",
     "build": "npm run build:app; npm run build:cca",
     "package": "node bin/package.js build",
     "chrome": "cd ./platform; cca run chrome",
