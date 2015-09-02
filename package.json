@@ -3,7 +3,8 @@
   "devDependencies": {
     "cordova-config-cli": "^0.1.0",
     "del": "^2.0.0",
-    "google-font-import": "^0.1.2"
+    "google-font-import": "^0.1.2",
+    "node-zip": "^1.1.1"
   },
   "engines": {
     "node": ">=0.10.0"
@@ -14,7 +15,7 @@
     "build:app": "cd src; gulp",
     "build:cca": "cd ./platform; cca build $PLATFORM",
     "build": "npm run build:app; npm run build:cca",
-    "package": "node bin/package.js build",
+    "package": "mkdir -p package/chrome; cd ./platform/www/; nodezip -c ../../package/chrome/chrome-app.zip .;mkdir -p package/chrome; cd ..; pwd; cp -r ./platforms/android/build/outputs/apk ../package/android",
     "chrome": "cd ./platform; cca run chrome",
     "android": "cd ./platform; cca run android",
     "ios": "cd ./platform; cca run ios",
