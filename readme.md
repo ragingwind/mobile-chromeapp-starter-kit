@@ -4,6 +4,9 @@
 
 > Mobile Chrome Apps Starter Kit is Yet Another Opinionated Boilerplate for Chrome Apps development. "Helping you to stay productive following the best practices. A solid starting point for both professionals and newcomers to the industry." - [google/web-starter-kit](http://goo.gl/YNV3lb)
 
+*Issues with the output or build should be reported on the `Mobile Chrome App` [issue tracker](https://github.com/MobileChromeApps/mobile-chrome-apps/issues) or `Polymer Starter Kit` [issue tracker](https://github.com/PolymerElements/polymer-starter-kit/issues).*
+
+
 ## Setup
 
 1. Install [Mobile Chrome Apps](http://goo.gl/nU5O6U) and Android or iOS SDKs. Please refer to [Install guide of Mobile Chrome Apps](https://github.com/MobileChromeApps/mobile-chrome-apps/blob/master/docs/Installation.md). and then Check your development environment using `cca checkenv`. You will get message like below if you have no problem to use `cca`
@@ -47,6 +50,7 @@ Or you can use handy scripts with npm. You can execute build and run commands wi
   - `npm run android`: run `cca run android` command on the `platform` path,
   - `npm run ios`: run `cca run ios` command on the `platform` path,
   - `npm run push`: run `cca push` command on the `platform` path. You should give target with ip address. This is a sample of command: `TARGET=192.168.0.10 npm run push`
+  - `npm run package`: Make and copy a unsigned zip file for Chrome and apk of Android to `package`. It should be run after `build`
 
 ## Mobile Chrome Apps
 
