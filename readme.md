@@ -6,7 +6,6 @@
 
 *Issues with the output or build should be reported on the `Mobile Chrome App` [issue tracker](https://github.com/MobileChromeApps/mobile-chrome-apps/issues) or `Polymer Starter Kit` [issue tracker](https://github.com/PolymerElements/polymer-starter-kit/issues).*
 
-
 ## Setup
 
 1. Install [Mobile Chrome Apps](http://goo.gl/nU5O6U) and Android or iOS SDKs. Please refer to [Install guide of Mobile Chrome Apps](https://github.com/MobileChromeApps/mobile-chrome-apps/blob/master/docs/Installation.md). and then Check your development environment using `cca checkenv`. You will get message like below if you have no problem to use `cca`
@@ -19,8 +18,8 @@
 1. Download a latest version of package at [release page](https://github.com/ragingwind/mobile-chrome-apps-starter-kit/releases) then extract where you want to.
 
     ```
-    wget https://github.com/ragingwind/mobile-chrome-apps-starter-kit/archive/v0.1.0.tar.gz
-    tar xvf v0.1.0.tar.gz
+    wget https://github.com/ragingwind/mobile-chrome-apps-starter-kit/archive/v0.5.0.tar.gz
+    tar xvf v0.5.0.tar.gz
     ```
 
 1. Run this command to install dependencies for NPM and bower
@@ -77,7 +76,13 @@ The starter kit are using PSK as default application. but we have to had some of
   ```
 - app/bower_components/font-roboto:
   - Download google fonts to local: Chrome Apps doesn't allow to use Google Fonts on remote site so we need to download all fonts in `font-roboto` to use in local. after run `npm install`, `postinstall` script will run `google-font-import` command to make it up.
-  
+
+## Known Issues
+
+- Tested on Mac OSX with android and chrome except ios
+- Some of files should be removed before build manually. For example `manifest.json`, `.gz`
+- All of features of Polymer Starter Kit has not been tested yet
+
 # License
 
 MIT @[Jimmy Moon](http://ragingwind.me)
