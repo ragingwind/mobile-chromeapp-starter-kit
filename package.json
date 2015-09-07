@@ -19,5 +19,6 @@
     "android": "cd ./platform; cca run android",
     "ios": "cd ./platform; cca run ios",
     "push": "cd ./platform; cca push --target=$TARGET"
-  }
+  },
+  "version": "1.0.0"
 }
