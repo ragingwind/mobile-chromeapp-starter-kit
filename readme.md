@@ -18,8 +18,14 @@
 1. Download a latest version of package at [release page](https://github.com/ragingwind/mobile-chrome-apps-starter-kit/releases) then extract where you want to.
 
     ```
-    wget https://github.com/ragingwind/mobile-chrome-apps-starter-kit/archive/v0.5.0.tar.gz
-    tar xvf v0.5.0.tar.gz
+    wget https://github.com/ragingwind/mca-starter-kit/archive/vx.x.x.tar.gz
+    tar xvf vx.x.x.tar.gz
+    ```
+    
+    or via npm
+    
+    ```
+    npm install mca-starter-kit
     ```
 
 1. Run this command to install dependencies for NPM and bower
