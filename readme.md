@@ -89,6 +89,7 @@ The starter kit are using PSK as default application. but we have to had some of
 - Some of files should be removed before build manually. For example `manifest.json`, `.gz`
 - All of features of Polymer Starter Kit has not been tested yet
 - Failed to route `home` at starting the application on Android's emulator/device
+
 # License
 
 MIT @[Jimmy Moon](http://ragingwind.me)
