@@ -1,4 +1,5 @@
 node_modules
 package
-platform/www/app
-platform/platforms
+platform/www/app/
+platform/platforms/
+platform/plugins/
