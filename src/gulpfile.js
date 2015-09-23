@@ -45,7 +45,7 @@ var styleTask = function (stylesPath, srcs) {
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/' + stylesPath))
     .pipe($.cssmin())
-    .pipe(gulp.dest('../platform/www/app/' + stylesPath))
+    .pipe(gulp.dest('./platform/www/app/' + stylesPath))
     .pipe($.size({title: stylesPath}));
 };
 
@@ -79,7 +79,7 @@ gulp.task('images', function () {
       progressive: true,
       interlaced: true
     })))
-    .pipe(gulp.dest('../platform/www/app/images'))
+    .pipe(gulp.dest('./platform/www/app/images'))
     .pipe($.size({title: 'images'}));
 });
 
@@ -91,24 +91,24 @@ gulp.task('copy', function () {
     '!app/cache-config.json'
   ], {
     dot: true
-  }).pipe(gulp.dest('../platform/www/app/'));
+  }).pipe(gulp.dest('./platform/www/app/'));
 
   var bower = gulp.src([
     'bower_components/**/*'
-  ]).pipe(gulp.dest('../platform/www/app/bower_components'));
+  ]).pipe(gulp.dest('./platform/www/app/bower_components'));
 
   var elements = gulp.src(['app/elements/**/*.html'])
-    .pipe(gulp.dest('../platform/www/app/elements'));
+    .pipe(gulp.dest('./platform/www/app/elements'));
 
   var swBootstrap = gulp.src(['bower_components/platinum-sw/bootstrap/*.js'])
-    .pipe(gulp.dest('../platform/www/app/elements/bootstrap'));
+    .pipe(gulp.dest('./platform/www/app/elements/bootstrap'));
 
   var swToolbox = gulp.src(['bower_components/sw-toolbox/*.js'])
-    .pipe(gulp.dest('../platform/www/app/sw-toolbox'));
+    .pipe(gulp.dest('./platform/www/app/sw-toolbox'));
 
   var vulcanized = gulp.src(['app/elements/elements.html'])
     .pipe($.rename('elements.vulcanized.html'))
-    .pipe(gulp.dest('../platform/www/app/elements'));
+    .pipe(gulp.dest('./platform/www/app/elements'));
 
   return merge(app, bower, elements, vulcanized, swBootstrap, swToolbox)
     .pipe($.size({title: 'copy'}));
@@ -117,13 +117,13 @@ gulp.task('copy', function () {
 // Copy web fonts to dist
 gulp.task('fonts', function () {
   return gulp.src(['app/fonts/**'])
-    .pipe(gulp.dest('../platform/www/app/fonts'))
+    .pipe(gulp.dest('./platform/www/app/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
-  var assets = $.useref.assets({searchPath: ['.tmp', 'app', '../platform/www/app/']});
+  var assets = $.useref.assets({searchPath: ['.tmp', 'app', './platform/www/app/']});
 
   return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
     // Replace path for vulcanized assets
@@ -143,16 +143,16 @@ gulp.task('html', function () {
       spare: true
     })))
     // Output files
-    .pipe(gulp.dest('../platform/www/app/'))
+    .pipe(gulp.dest('./platform/www/app/'))
     .pipe($.size({title: 'html'}));
 });
 
 // Polybuild will take care of inlining HTML imports,
 // scripts and CSS for you.
 gulp.task('vulcanize', function () {
-  return gulp.src('../platform/www/app/index.html')
+  return gulp.src('./platform/www/app/index.html')
     .pipe(polybuild({maximumCrush: true}))
-    .pipe(gulp.dest('../platform/www/app/'));
+    .pipe(gulp.dest('./platform/www/app/'));
 });
 
 // If you require more granular configuration of Vulcanize
@@ -161,10 +161,10 @@ gulp.task('vulcanize', function () {
 
 // Rename Polybuild's index.build.html to index.html
 gulp.task('rename-index', function () {
-  gulp.src('../platform/www/app/index.build.html')
+  gulp.src('./platform/www/app/index.build.html')
     .pipe($.rename('index.html'))
-    .pipe(gulp.dest('../platform/www/app/'));
-  return del(['../platform/www/app/index.build.html'], {force: true});
+    .pipe(gulp.dest('./platform/www/app/'));
+  return del(['./platform/www/app/index.build.html'], {force: true});
 });
 
 // Generate config data for the <sw-precache-cache> element.
@@ -175,7 +175,7 @@ gulp.task('rename-index', function () {
 // See https://github.com/PolymerElements/polymer-starter-kit#enable-service-worker-support
 // for more context.
 gulp.task('cache-config', function (callback) {
-  var dir = '../platform/www/app';
+  var dir = './platform/www/app';
   var config = {
     cacheId: packageJson.name || path.basename(__dirname),
     disabled: false
@@ -201,7 +201,7 @@ gulp.task('cache-config', function (callback) {
 // Clean output directory
 gulp.task('clean', function (cb) {
   $.cache.clearAll(function() {
-    del(['.tmp', '../platform/www/app'], {force: true}, cb);
+    del(['.tmp', './platform/www/app'], {force: true}, cb);
   });
 });
 
@@ -257,7 +257,7 @@ gulp.task('serve:dist', ['default'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: '../platform/www/app/',
+    server: './platform/www/app/',
     middleware: [ historyApiFallback() ]
   });
 });
@@ -278,4 +278,6 @@ gulp.task('default', ['clean'], function (cb) {
 require('web-component-tester').gulp.init(gulp);
 
 // Load custom tasks from the `tasks` directory
-try { require('require-dir')('tasks'); } catch (err) {}
+try { require('require-dir')('tasks'); } catch (err) {
+  console.log(err);
+}

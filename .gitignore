@@ -1,5 +1,5 @@
 node_modules
-package
-platform/www/app/
-platform/platforms/
-platform/plugins/
+src/platform/www/app/
+src/platform/platforms/
+src/platform/plugins/
+src/package

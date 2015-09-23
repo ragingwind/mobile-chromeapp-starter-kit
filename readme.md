@@ -21,9 +21,9 @@
     wget https://github.com/ragingwind/mca-starter-kit/archive/vx.x.x.tar.gz
     tar xvf vx.x.x.tar.gz
     ```
-    
+
     or via npm
-    
+
     ```
     npm install mca-starter-kit
     ```
@@ -32,7 +32,7 @@
     ```
     npm install
     ```
-and then `postinstall` script will be started. The `postinstall` script runs `npm install && bower install` command for Polymer Starter Kit, which is on `src` path and then starting font migration for `font-roboto` via `google-font-import` which will be downloading `font-roboto` to use its fonts in local.
+and then `postinstall` script will be started. The `postinstall` script runs `npm install && npm install --save-dev cca-delegate gulp-util && bower install`, on `src` path and then starting font migration for `font-roboto` via `google-font-import` which will be downloading `font-roboto` to use its fonts in local.
 
 3. To configure [Mobile Chrome Apps](http://goo.gl/nU5O6U) to use npm handy command below with NAME, ID and PLATFORM config
 
@@ -42,20 +42,19 @@ and then `postinstall` script will be started. The `postinstall` script runs `np
 
 ## Build and Run
 
-This project has two of the build systems for each project, Mobile Chrome Apps and Polymer Starter Kit. Each build command should be executed on the each project path. Please visit if you want to know more details of build commands.
+This project has two build systems for each project. One is Mobile Chrome Apps, Another is Polymer Starter Kit, each build command should be executed on the each project path below.
 
   - Mobile Chrome App: ./platform
   - Polymer Starter Kit: ./src
-  
-Or you can use handy scripts with npm. You can execute build and run commands without changing a path. here is list of run scripts
 
-  - `npm run build:app`: run `gulp` command on the `src` path
-  - `npm run build`: run both of build command `build:app` and `cca build` command running on the `platform` path in sequential time. You should pass platform type if you need to set the target platform, `android` or `ios`. this is a sample of command: `PLATFORM=android npm run build`
-  - `npm run chrome`: run `cca run chrome` command on the `platform` path,
-  - `npm run android`: run `cca run android` command on the `platform` path,
-  - `npm run ios`: run `cca run ios` command on the `platform` path,
-  - `npm run push`: run `cca push` command on the `platform` path. You should give target with ip address. This is a sample of command: `TARGET=192.168.0.10 npm run push`
-  - `npm run package`: Make and copy a unsigned zip file for Chrome and apk of Android to `package`. It should be run after `build`
+or you can use gulp task under `./src` added to `src/app` as `tasks/cca-tasks.js`. You can just execute build and run commands without changing of path to `cordova platform`. here is the list of run scripts
+
+- `gulp cca:build`: build application and then build cordova project. `platform` should be passed for build, `--platform=android`. **At this momment, we only support build for android**
+- `gulp cca:run`: run cordova project on emulate or devices. use options with `--platform=chrome|android` and `--run=emulate|device`
+- `gulp cca:push`: run `cca push` command on the `platform` path. You should give target with ip address, with target option `--target=192.168.0.10` and `--watch`
+- `culp cca:package`: Make and copy a unsigned zip file for Chrome and apk of Android to `package` path. It should be run after `build`
+
+Please visit reference sites if you want to know further details of build commands.
 
 ## Mobile Chrome Apps
 
@@ -63,7 +62,7 @@ We use pre-created project for Mobile Chrome Apps. that means you need to update
 
 ## Polymer Starter Kit (PSK)
 
-The starter kit are using PSK as default application. but we have to had some of changes from PSK for fitting in Chrome Apps. We use latest version at this time it was coming over from [latest commit](https://github.com/PolymerElements/polymer-starter-kit/commit/ece4f2c2aa75ce3ebfe6ccd5d71528168ce63a11) at master brach on the PSK. The version of PSK could be updated any time if we need to. Please see below what has been changed in the current version.
+The Mobile Chrome App Starter Kit use PSK as default application but we have to had some of changes from PSK for fitting in Chrome Apps. We use latest version at this time it was coming over from [latest commit](https://github.com/PolymerElements/polymer-starter-kit/commit/ece4f2c2aa75ce3ebfe6ccd5d71528168ce63a11) at master brach on the PSK. The version of PSK could be updated any time if we need to. Please see below what has been changed in the current version.
 
 - gulpfile.js:
   - Change `dist` path to `../platform/www/app/`

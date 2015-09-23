@@ -21,14 +21,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "postinstall": "cd src; npm install && bower install; gf-import ./bower_components/font-roboto/roboto.html --html=./bower_components/font-roboto/",
-    "config": "cd platform; cordova-config set name \"$NAME\"; cordova-config set id $ID",
-    "build:app": "cd src; gulp",
-    "build": "npm run build:app; cd ./platform; cca build $PLATFORM",
-    "package": "mkdir -p package/chrome; cd ./platform/www/; nodezip -c ../../package/chrome/chrome-app.zip .;mkdir -p package/chrome; cd ..; pwd; cp -r ./platforms/android/build/outputs/apk ../package/android",
-    "chrome": "cd ./platform; cca run chrome",
-    "android": "cd ./platform; cca run android",
-    "ios": "cd ./platform; cca run ios",
-    "push": "cd ./platform; cca push --target=$TARGET"
+    "postinstall": "cd src; npm install && npm install --save-dev cca-delegate gulp-util && bower install; gf-import ./bower_components/font-roboto/roboto.html --html=./bower_components/font-roboto/; cd ./platform; cca prepare",
+    "config": "cd platform; cordova-config set name \"$NAME\"; cordova-config set id $ID"
   }
 }
