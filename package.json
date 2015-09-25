@@ -1,7 +1,14 @@
 {
   "name": "mca-starter-kit",
+  "appId": "com.your.appid2",
   "version": "1.1.1",
   "description": "Mobile Chrome Apps Starter Kit is Yet Another Opinionated Boilerplate for Chrome Apps development",
+  "author": {
+    "name" : "Jimmy Moon",
+    "email" : "ragingwind@gmail.com",
+    "url" : "http://ragingwind.me"
+  },
+  "repository": "ragingwind/mca-starter-kit",
   "devDependencies": {
     "cordova-config-cli": "^0.1.0",
     "del": "^2.0.0",
@@ -15,13 +22,10 @@
     "cordova",
     "starter kit"
   ],
-  "author": "Jimmy Moon",
-  "repository": "ragingwind/mca-starter-kit",
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "postinstall": "cd src; npm install && npm install --save-dev cca-delegate gulp-util && bower install; gf-import ./bower_components/font-roboto/roboto.html --html=./bower_components/font-roboto/; cd ./platform; cca prepare",
-    "config": "cd platform; cordova-config set name \"$NAME\"; cordova-config set id $ID"
+    "postinstall": "cd src && npm install && npm install --save-dev cca-delegate gulp-util && bower install && gf-import ./bower_components/font-roboto/roboto.html --html=./bower_components/font-roboto/ && cd ./platform && cca prepare && cordova-config set name \"$npm_package_name\" && cordova-config set id $npm_package_appId && cordova-config set desc \"$npm_package_description\" && cordova-config set author \"$npm_package_author_name\" \"$npm_package_author_email\" \"$npm_package_author_url\""
   }
 }

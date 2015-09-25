@@ -27,18 +27,27 @@
     ```
     npm install mca-starter-kit
     ```
+1. Update some of properties in package.json which are related to your project, are `name`, 'appId`, `description`, `repository` and `author`, will be used to update `config.xml` for cordova project
+
+  ```
+  {
+    "name": "mca-starter-kit",
+    "appId": "com.your.appid2",
+    "description": "Mobile Chrome Apps Starter Kit is Yet Another Opinionated Boilerplate for Chrome Apps development",
+    "author": {
+      "name" : "Jimmy Moon",
+      "email" : "ragingwind@gmail.com",
+      "url" : "http://ragingwind.me"
+    },
+    "repository": "ragingwind/mca-starter-kit",
+  }
+  ```
 
 1. Run this command to install dependencies for NPM and bower
     ```
     npm install
     ```
 and then `postinstall` script will be started. The `postinstall` script runs `npm install && npm install --save-dev cca-delegate gulp-util && bower install`, on `src` path and then starting font migration for `font-roboto` via `google-font-import` which will be downloading `font-roboto` to use its fonts in local.
-
-3. To configure [Mobile Chrome Apps](http://goo.gl/nU5O6U) to use npm handy command below with NAME, ID and PLATFORM config
-
-    ```
-    NAME="My App" ID=com.my.app PLATFORM='android ios' npm run config
-    ```
 
 ## Build and Run
 
