@@ -11,9 +11,7 @@
   "repository": "ragingwind/mca-starter-kit",
   "devDependencies": {
     "cordova-config-cli": "^0.1.0",
-    "del": "^2.0.0",
-    "google-font-import": "^0.1.2",
-    "node-zip": "^1.1.1"
+    "google-font-import": "^0.1.2"
   },
   "keywords": [
     "chrome",
