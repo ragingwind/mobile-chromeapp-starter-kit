@@ -1,7 +1,7 @@
 {
   "name": "mobile-chromeapp-starter-kit",
   "appId": "com.your.mobile-chromeapp-starter-kit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Mobile Chrome Apps Starter Kit is Yet Another Opinionated Boilerplate for Chrome Apps development",
   "author": {
     "name": "Jimmy Moon",
