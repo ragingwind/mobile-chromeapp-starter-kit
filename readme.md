@@ -18,14 +18,14 @@
 1. Download a latest version of package at [release page](https://github.com/ragingwind/mobile-chromeapp-starter-kit/releases) then extract where you want to.
 
     ```
-    wget https://github.com/ragingwind/mobile-chromeapp-starter-kit/archive/vx.x.x.tar.gz
-    tar xvf vx.x.x.tar.gz
+    mkdir mcsk && cd $_
+    curl -fsSL https://github.com/ragingwind/mobile-chromeapp-starter-kit/archive/v1.2.1.tar.gz | tar -xz --strip-components 1
     ```
 
-    or via npm
+    or git clone
 
     ```
-    npm install mobile-chromeapp-starter-kit
+    git clone https://github.com/ragingwind/mobile-chromeapp-starter-kit.git
     ```
 1. Update some of properties of package.json which might be related to your project such as `name`, 'appId`, `description`, `repository` and `author`, will be used to update `config.xml` for cordova project.
 
