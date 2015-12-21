@@ -41,5 +41,6 @@
     <hook src="./hooks/before_prepare/remove-risks.js" type="before_prepare"/>
     <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect"/>
     <preference name="xwalkMode" value="embedded"/>
+    <preference name="xwalkMultipleApk" value="true"/>
     
 <access origin="*"/></widget>
