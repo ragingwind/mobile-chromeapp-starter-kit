@@ -94,7 +94,7 @@ We use final released the full version of PSK as default application. After down
 
 - at `gulpfile.js`, Change `dist` path, Update vulcanize task
 - at `app/scripts/app.js`, Change base path
-- at `app/elements/routing.html`, Update default route ```
+- at `app/elements/routing.html`, Update default route
 - at `app/bower_components/font-roboto/roboto.html`, `link` will be replace to `@import`
 
 ## Known Issues
