@@ -43,4 +43,5 @@
     <preference name="xwalkMode" value="embedded"/>
     <preference name="xwalkMultipleApk" value="true"/>
     
+    
 <access origin="*"/></widget>

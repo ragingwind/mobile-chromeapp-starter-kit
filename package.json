@@ -11,9 +11,7 @@
   "repository": "ragingwind/mobile-chromeapp-starter-kit",
   "devDependencies": {
     "cordova-config-cli": "^0.1.0",
-    "google-font-import": "^0.1.2",
-    "got-psk": "0.0.4",
-    "replace": "^0.3.0"
+    "got-psk": "0.0.4"
   },
   "keywords": [
     "chrome",
@@ -27,7 +25,8 @@
   },
   "scripts": {
     "reset": "cd src && rm -rf .tmp app bower_components docs node_modules platform/platforms platform/plugins platform/www/app *.* ..?* .[!.]*",
-    "setup": "cd src && replace \"\\'dist\" \"'platform/www/app\" gulpfile.js && cd platform && cca prepare && cordova-config set name \"$npm_package_name\" && cordova-config set id $npm_package_appId && cordova-config set desc \"$npm_package_description\" && cordova-config set author \"$npm_package_author_name\" \"$npm_package_author_email\" \"$npm_package_author_url\"",
-    "postinstall": "got-psk src full@1.1.1 && cd src && npm install && npm install --save-dev cca-delegate gulp-util && bower install && gf-import ./bower_components/font-roboto/roboto.html --html=./bower_components/font-roboto/"
+    "setup": "cd src/platform && cca prepare && cordova-config set name \"$npm_package_name\" && cordova-config set id $npm_package_appId && cordova-config set desc \"$npm_package_description\" && cordova-config set author \"$npm_package_author_name\" \"$npm_package_author_email\" \"$npm_package_author_url\"",
+    "patch": "curl -fsSL https://goo.gl/GwsyAd > src/gulpfile.js && curl -fsSL https://goo.gl/s7yAq2 > src/app/bower_components/font-roboto/roboto.html && curl -fsSL https://goo.gl/a5Memx > src/app/elements/routing.html && curl -fsSL https://goo.gl/iuqklQ > src/app/scripts/app.js",
+    "postinstall": "got-psk src full@1.2.1 && cd src && npm install && npm install --save-dev polybuild cca-delegate gulp-util && bower install && mv bower_components app && cd .. && npm run patch"
   }
 }
