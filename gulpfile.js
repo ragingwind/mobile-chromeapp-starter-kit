@@ -191,7 +191,7 @@ gulp.task('vulcanize', function() {
     .pipe(polybuild({maximumCrush: true}))
     .pipe($.rename(function(file) {
       if (file.extname === '.html') {
-        file.basename = file.basename.replace('.build', '');
+        file.basename = file.basename.replace('.build', '.vulcanized');
       }
     }))
     .pipe(gulp.dest(dist('elements')))
